@@ -30,11 +30,15 @@ public class User {
     private String password;
 
     //specific user-text, for the "matching-play"
-    private String userText;
+    private String usertext;
 
 
     public String getUserText() {
-        return userText;
+        return usertext;
+    }
+
+    public void setUserText(String userText) {
+        this.usertext = usertext;
     }
 
     public Long getId() {
