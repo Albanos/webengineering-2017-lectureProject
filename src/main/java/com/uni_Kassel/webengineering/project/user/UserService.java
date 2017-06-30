@@ -1,5 +1,6 @@
 package com.uni_Kassel.webengineering.project.user;
 
+import com.uni_Kassel.webengineering.project.usertext.Usertext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,19 @@ public class UserService {
     private UserRepository userRepository;
 
     public ArrayList<User> getUserList(){
-        return userRepository.getUserList();
+        //return userRepository.getUserList();
+        return (ArrayList<User>) userRepository.findAll();
     }
 
     public User getUserByID(Long id){
+        //return userRepository.findOne(id);
         return userRepository.findOne(id);
     }
 
-    public void addUser(User user){
+    public void addUser(User user, Usertext usertext){
+        user.setUsertext(usertext);
+        usertext.setAuthor(user);
+
         userRepository.save(user);
     }
 

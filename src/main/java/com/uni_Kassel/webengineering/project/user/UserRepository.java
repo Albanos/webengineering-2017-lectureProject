@@ -11,12 +11,15 @@ import java.util.ArrayList;
  */
 public interface UserRepository extends CrudRepository<User,Long> {
 
-
+    //EMPTY NOW
+    /*
     @Query("Select u from User_ u ")
     ArrayList<User> getUserList();
 
 
     @Query("SELECT u FROM User_ u WHERE u.email = :email AND u.password = :password")
     User findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
+    */
+
 
 }

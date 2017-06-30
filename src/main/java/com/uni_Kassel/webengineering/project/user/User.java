@@ -2,6 +2,7 @@ package com.uni_Kassel.webengineering.project.user;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.uni_Kassel.webengineering.project.usertext.Usertext;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -30,16 +31,8 @@ public class User {
     private String password;
 
     //specific user-text, for the "matching-play"
-    private String usertext;
+    private Usertext usertext;
 
-
-    public String getUserText() {
-        return usertext;
-    }
-
-    public void setUserText(String userText) {
-        this.usertext = usertext;
-    }
 
     public Long getId() {
         return id;
@@ -63,5 +56,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Usertext getUsertext() {
+        return usertext;
+    }
+
+    public void setUsertext(Usertext usertext) {
+        this.usertext = usertext;
     }
 }
