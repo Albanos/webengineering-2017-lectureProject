@@ -2,13 +2,12 @@ package com.uni_Kassel.webengineering.project.user;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.uni_Kassel.webengineering.project.usertext.Usertext;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,11 +25,13 @@ public class User {
 
     private String email;
 
-    //Dont return the password of User in plain text
-    @JsonIgnore
+    //Über JSON nicht lesbar: wir schränken nutzung über access ein
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     //specific user-text, for the "matching-play"
+    //cascade: Ref. Integrität
+    @OneToOne(mappedBy = "author", cascade = CascadeType.ALL)
     private Usertext usertext;
 
 
@@ -50,6 +51,7 @@ public class User {
         this.email = email;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }

@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/api/user", method = RequestMethod.GET)
-    public ArrayList<User> getUserList(){
+    public Iterable<User> getUserList(){
         LOG.info("Return the List of all persistent users");
         return userService.getUserList();
     }

@@ -18,15 +18,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public ArrayList<User> getUserList(){
+    public Iterable<User> getUserList(){
         //return userRepository.getUserList();
-        return (ArrayList<User>) userRepository.findAll();
+        return userRepository.findAll();
     }
 
     public User getUserByID(Long id){
         //return userRepository.findOne(id);
         return userRepository.findOne(id);
     }
+
 
     public void addUser(User user, Usertext usertext){
         user.setUsertext(usertext);
