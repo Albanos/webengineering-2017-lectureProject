@@ -1,12 +1,9 @@
-package com.uni_Kassel.webengineering.project.user;
+package de.unikassel.webengineering.project.user;
 
-import com.uni_Kassel.webengineering.project.usertext.Usertext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 /**
  * Created by Luan Hajzeraj on 29.06.2017.
@@ -28,10 +25,11 @@ public class UserService {
         return userRepository.findOne(id);
     }
 
+    public User getUserByMailAndPassword(String email, String password){
+        return userRepository.findByEmailAndPassword(email, password);
+    }
 
-    public void addUser(User user, Usertext usertext){
-        user.setUsertext(usertext);
-        usertext.setAuthor(user);
+    public void addUser(User user){
 
         userRepository.save(user);
     }

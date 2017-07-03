@@ -1,4 +1,4 @@
-package com.uni_Kassel.webengineering.project;
+package de.unikassel.webengineering.project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

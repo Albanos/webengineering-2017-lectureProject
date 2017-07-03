@@ -1,14 +1,11 @@
-package com.uni_Kassel.webengineering.project.user;
+package de.unikassel.webengineering.project.user;
 
-import com.uni_Kassel.webengineering.project.usertext.Usertext;
-import com.uni_Kassel.webengineering.project.usertext.UsertextRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Luan Hajzeraj on 29.06.2017.
@@ -22,12 +19,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UsertextRepository usertextRepository;
 
     @RequestMapping(value = "/api/user", method = RequestMethod.POST)
-    public void addUser(@RequestBody User newUser, @RequestBody Usertext usertext){
-        userService.addUser(newUser, usertext);
+    public void addUser(@RequestBody User newUser){
+        userService.addUser(newUser);
 
         /*
         LOG.info("Add user: ID={}, email={}, password={}, text={}",
