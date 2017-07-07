@@ -51,8 +51,15 @@ public class JWTFilter extends GenericFilterBean {
         String token = auth.substring(7);
         try {
             Claims body = (Claims) authenticationService.parseToken(token);
-            String email = body.getSubject();
-            LOG.info("Successful login from {}", email);
+            LOG.info("Successful login from={} with ID={}", body.getSubject(), body.getId());
+
+            if(body.getId() == null){
+                LOG.info("ID from User={} is null. Do you forget to send the JWT-Token!?", body.getSubject());
+            }
+
+            //Setze im Request den User als aktuellen/aktuell angemeldeten User
+            authenticationService.setUser(Long.parseLong(body.getId()), body.getSubject());
+
             filterChain.doFilter(request, response);
         } catch (SignatureException e) {
             LOG.warn("Token is invalid: {}", token);

@@ -4,9 +4,13 @@ import de.unikassel.webengineering.project.user.User;
 import de.unikassel.webengineering.project.user.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,6 +25,9 @@ public class AuthenticationService {
     @Autowired
     private UserService userService;
 
+    @Value("${authenticationService.salt}")
+    private String salt;
+
     //Start-Secret für das JWT-Token
     String secret = "Severus Snape was a good guy!";
 
@@ -30,7 +37,8 @@ public class AuthenticationService {
     }
 
     public UserToken login(String email, String password){
-        User user = userService.getUserByMailAndPassword(email, password);
+        String hashedPassword = hashPassword(password);
+        User user = userService.getUserByMailAndPassword(email, hashedPassword);
 
         if(user == null){
             LOG.info("User with data login={}, password={} does not exist", email, password);
@@ -42,6 +50,8 @@ public class AuthenticationService {
         //Baue das Token für den User
         String token = Jwts.builder()
                 .setSubject(email)
+                //Integriere die ID des Benutzers in das token
+                .setId(user.getId().toString())
                 .signWith(SignatureAlgorithm.HS512,secret)
                 .compact();
 
@@ -60,5 +70,18 @@ public class AuthenticationService {
                 .setSigningKey(secret)
                 .parse(jwtToken)
                 .getBody();
+    }
+
+    public void setUser(Long id, String email) {
+        User user = new User();
+        user.setId(id);
+        user.setEmail(email);
+        UsernamePasswordAuthenticationToken secAuth = new UsernamePasswordAuthenticationToken(user, null);
+        SecurityContextHolder.getContext().setAuthentication(secAuth);
+    }
+
+    //Gibt gehastes Password zurück
+    public String hashPassword(String password) {
+        return DigestUtils.sha512Hex(salt + password);
     }
 }

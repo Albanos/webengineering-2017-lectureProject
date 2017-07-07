@@ -78,6 +78,18 @@
             <version>3.4</version>
         </dependency>
 
+        <!-- Quasi auch für Authentifizierung-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!--User-Commons lib, für SHA-Algorithm (Passw-hasing) -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+
 
 
     </dependencies>
