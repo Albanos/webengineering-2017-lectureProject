@@ -3,8 +3,10 @@ package de.unikassel.webengineering.project.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import de.unikassel.webengineering.project.chat.Chat;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Luan Hajzeraj on 29.06.2017.
@@ -50,16 +52,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    /*
-    public Usertext getUsertext() {
-        return usertext;
-    }
-
-    public void setUsertext(Usertext usertext) {
-        this.usertext = usertext;
-    }
-    */
 
     public String getUsertext() {
         return usertext;

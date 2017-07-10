@@ -14,8 +14,6 @@ import java.util.ArrayList;
 public class UserController {
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
-    private ArrayList<User> userList = new ArrayList<>();
-
     @Autowired
     private UserService userService;
 
