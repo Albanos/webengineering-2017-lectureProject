@@ -24,4 +24,5 @@ public class JWTConfiguration {
 
         return bean;
     }
+
 }

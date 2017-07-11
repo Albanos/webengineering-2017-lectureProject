@@ -1,10 +1,6 @@
-package de.unikassel.webengineering.project.chat;
+package de.unikassel.webengineering.project.message;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import de.unikassel.webengineering.project.user.User;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
@@ -13,8 +9,9 @@ import java.util.Date;
 /**
  * Created by Luan Hajzeraj on 08.07.2017.
  */
-@Entity
-public class Chat {
+//Message allein konnte nicht gemappt werden...
+@Entity(name="Message_")
+public class Message {
 
     @Id
     @GeneratedValue
@@ -33,7 +30,7 @@ public class Chat {
     private Date timestamp;
     private String message;
 
-    public Chat(){
+    public Message(){
 
     }
 
@@ -76,5 +73,10 @@ public class Chat {
 
     public void setToUser(User toUser) {
         this.toUser = toUser;
+    }
+
+    @PrePersist
+    public void prePersistent(){
+        timestamp = new Date();
     }
 }
