@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class JWTConfiguration {
     @Autowired
     private AuthenticationService authenticationService;
-
+    /*
     @Bean
     public FilterRegistrationBean jwtFilter(){
         FilterRegistrationBean bean = new FilterRegistrationBean();
@@ -24,5 +24,5 @@ public class JWTConfiguration {
 
         return bean;
     }
-
+    */
 }
