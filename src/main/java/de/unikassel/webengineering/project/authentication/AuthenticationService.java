@@ -1,6 +1,7 @@
 package de.unikassel.webengineering.project.authentication;
 
 import de.unikassel.webengineering.project.user.User;
+import de.unikassel.webengineering.project.user.UserResponse;
 import de.unikassel.webengineering.project.user.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -32,13 +33,16 @@ public class AuthenticationService {
     String secret = "Severus Snape was a good guy!";
 
     public static class UserToken{
-        public User user;
+        //public User user;
+        public UserResponse userResponse;
         public String token;
     }
 
     public UserToken login(String email, String password){
         String hashedPassword = hashPassword(password);
-        User user = userService.getUserByMailAndPassword(email, hashedPassword);
+        //User user = userService.getUserByMailAndPassword(email, hashedPassword);
+        UserResponse user = userService.getUserByMailAndPassword(email, hashedPassword);
+
 
         if(user == null){
             LOG.info("User with data login={}, password={} does not exist", email, password);
@@ -58,7 +62,8 @@ public class AuthenticationService {
 
         //Setze das generierte Token
         UserToken userToken = new UserToken();
-        userToken.user = user;
+        //userToken.user = user;
+        userToken.userResponse = user;
         userToken.token = token;
 
         return userToken;

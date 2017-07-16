@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
+
 /**
  * Created by Luan Hajzeraj on 29.06.2017.
  */
@@ -27,8 +29,37 @@ public class UserService {
         return userRepository.findOne(id);
     }
 
-    public User getUserByMailAndPassword(String email, String password){
-        return userRepository.findByEmailAndPassword(email, password);
+    //public User getUserByMailAndPassword(String email, String password){
+    public UserResponse getUserByMailAndPassword(String email, String password){
+        //return userRepository.findByEmailAndPassword(email, password);
+
+
+        User user = userRepository.findByEmailAndPassword(email,password);
+        UserResponse userResponse = new UserResponse();
+
+        userResponse.setId(user.getId());
+        userResponse.setUserName(user.getEmail());
+        userResponse.setUserText(user.getUsertext());
+
+        for(User u : user.getFollowI()){
+            userResponse.getFollowI().add(u.getId());
+        }
+        for(User u : user.getFollowMe()){
+            userResponse.getFollowMe().add(u.getId());
+        }
+
+        Iterator it = userResponse.getFollowI().iterator();
+        while(it.hasNext()){
+            Long l = (Long) it.next();
+            if(userResponse.getFollowMe().contains(l)){
+                userResponse.getMatches().add(l);
+            }
+        }
+
+        return userResponse;
+
+
+
     }
 
     public void addUser(User user){

@@ -95,4 +95,5 @@ public class User {
     public void setFollowI(Set<User> followI) {
         this.followI = followI;
     }
+
 }
