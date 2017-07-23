@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
- * Created by Luan Hajzeraj on 09.07.2017.
+ * @author Luan Hajzeraj on 09.07.2017.
  */
 @Service
 public class MessageService {
@@ -28,16 +30,16 @@ public class MessageService {
     }
 
 
-    public Iterable<Message> getMessagesOfActualUser(User user){
-        LOG.info("Get messages from user={}", user.getEmail());
+    public List<Message> getMessagesOfActualUser(User user){
+//    public Iterable<Message> getMessagesOfActualUser(User user){
 
         //Wenn der User kein JWT-Token mitsendet, ist es der annonymus-User. Dieser hat keine
         //messages
         if(userService.isAnonymous()){
-            LOG.info("The User is anonymus and have not messages. Do you forget the JWT-Token?");
+            LOG.info("The User is anonymus and have not messages");
             return null;
         }
-        return messageRepository.findMessagesOfActualUser(user);
+        return messageRepository.findByToUser(user);
     }
 
 }

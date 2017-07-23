@@ -1,6 +1,5 @@
 package de.unikassel.webengineering.project.user;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +8,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
- * Created by Luan Hajzeraj on 29.06.2017.
+ * @author Luan Hajzeraj on 29.06.2017.
  */
 @Service
 public class UserService {
@@ -20,7 +20,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Iterable<User> getUserList(){
+    public List<User> getUserList(){
         //return userRepository.getUserList();
         return userRepository.findAll();
     }
@@ -34,42 +34,8 @@ public class UserService {
     public UserResponse getUserByMailAndPassword(String email, String password){
         //return userRepository.findByEmailAndPassword(email, password);
 
-
         User user = userRepository.findByEmailAndPassword(email,password);
-        UserResponse userResponse = new UserResponse();
-
-        userResponse.setId(user.getId());
-        userResponse.setUserName(user.getEmail());
-        userResponse.setUserText(user.getUsertext());
-
-        for(User u : user.getFollowI()){
-            //userResponse.getFollowI().add(u.getId());
-            userResponse.getFollowI().add(u);
-        }
-        for(User u : user.getFollowMe()){
-            //userResponse.getFollowMe().add(u.getId());
-            userResponse.getFollowMe().add(u);
-        }
-
-        /*
-        Iterator it = userResponse.getFollowI().iterator();
-        while(it.hasNext()){
-
-            Long l = (Long) it.next();
-            if(userResponse.getFollowMe().contains(l)){
-                userResponse.getMatches().add(l);
-
-            }
-
-
-        }
-        */
-
-        for(User u : userResponse.getFollowI()){
-            if(userResponse.getFollowMe().contains(u)){
-                userResponse.getMatches().add(u);
-            }
-        }
+        UserResponse userResponse = new UserResponse(user);
 
         return userResponse;
 
@@ -88,6 +54,7 @@ public class UserService {
     public User getCurrentUser(){
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
+
 
     /**
      * Sets the current user to anonymous.

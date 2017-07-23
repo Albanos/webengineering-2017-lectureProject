@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 /**
- * Created by Luan Hajzeraj on 08.07.2017.
+ * @author Luan Hajzeraj on 08.07.2017.
  */
 @RestController
 public class MessageController {

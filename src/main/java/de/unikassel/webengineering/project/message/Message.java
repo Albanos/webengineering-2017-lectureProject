@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by Luan Hajzeraj on 08.07.2017.
+ * @author Luan Hajzeraj on 08.07.2017.
  */
 //Message allein konnte nicht gemappt werden...
 @Entity(name="Message_")

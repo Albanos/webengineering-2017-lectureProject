@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Luan Hajzeraj on 29.06.2017.
+ * @author Luan Hajzeraj on 29.06.2017.
  */
 
 //http://wiki.fasterxml.com/JacksonFeatureObjectIdentity

@@ -5,18 +5,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by Luan Hajzeraj on 29.06.2017.
+ * @author Luan Hajzeraj on 29.06.2017.
  */
 @RestController
 public class UserController {
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/api/user", method = RequestMethod.POST)
     public void addUser(@RequestBody User newUser){
@@ -29,7 +32,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/api/user", method = RequestMethod.GET)
-    public Iterable<User> getUserList(){
+    public List<User> getUserList(){
         LOG.info("Return the List of all persistent users");
         return userService.getUserList();
     }

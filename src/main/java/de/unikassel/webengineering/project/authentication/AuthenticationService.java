@@ -15,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by Luan Hajzeraj on 03.07.2017.
+ * @author Luan Hajzeraj on 03.07.2017.
  */
 
 @Service
