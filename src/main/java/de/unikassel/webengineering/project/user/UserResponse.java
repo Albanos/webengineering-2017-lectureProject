@@ -7,22 +7,23 @@ import java.util.HashSet;
 /**
  * Created by Luan Hajzeraj on 16.07.2017.
  */
+
+/**
+ * Ist eine Hilfklasse für den Response des Users, bspw. nach dem Login. Diese wird benötigt, weil die
+ * aktuelle Konstruktion von "Likes" und "gelikt-werden" sonst einen Überlauf erzeugen würde...
+ */
 public class UserResponse {
     private Long id;
     private String userName;
     private String userText;
-    //private ArrayList followI;
-    //private ArrayList followMe;
-    private HashSet followI;
-    private HashSet followMe;
-    private HashSet matches;
+    private HashSet<Long> followI;
+    private HashSet<Long> followMe;
+    private HashSet<Long> matches;
 
     public UserResponse(){
-        //followI = new ArrayList();
-        //followMe = new ArrayList();
-        followI = new HashSet();
-        followMe = new HashSet();
-        matches = new HashSet();
+        followI = new HashSet<Long>();
+        followMe = new HashSet<Long>();
+        matches = new HashSet<Long>();
     }
 
     public Long getId() {
@@ -67,27 +68,27 @@ public class UserResponse {
     }
     */
 
-    public HashSet getFollowI() {
+    public HashSet<Long> getFollowI() {
         return followI;
     }
 
-    public void setFollowI(HashSet followI) {
+    public void setFollowI(HashSet<Long> followI) {
         this.followI = followI;
     }
 
-    public HashSet getFollowMe() {
+    public HashSet<Long> getFollowMe() {
         return followMe;
     }
 
-    public void setFollowMe(HashSet followMe) {
+    public void setFollowMe(HashSet<Long> followMe) {
         this.followMe = followMe;
     }
 
-    public HashSet getMatches() {
+    public HashSet<Long> getMatches() {
         return matches;
     }
 
-    public void setMatches(HashSet matches) {
+    public void setMatches(HashSet<Long> matches) {
         this.matches = matches;
     }
 }

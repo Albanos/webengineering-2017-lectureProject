@@ -13,8 +13,9 @@ import java.util.Set;
  */
 
 //http://wiki.fasterxml.com/JacksonFeatureObjectIdentity
+    //MERKE: @JsonIdentiyInfo macht beim senden von Nachrichten Probleme, deshalb auskommentiert
 @Entity(name = "User_")
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="id")
+//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class User {
 
     @Id
@@ -79,7 +80,7 @@ public class User {
     public void setUsertext(String usertext) {
         this.usertext = usertext;
     }
-    //@JsonIgnore
+    @JsonIgnore
     public Set<User> getFollowMe() {
         return followMe;
     }
@@ -87,7 +88,7 @@ public class User {
     public void setFollowMe(Set<User> followMe) {
         this.followMe = followMe;
     }
-    //@JsonIgnore
+    @JsonIgnore
     public Set<User> getFollowI() {
         return followI;
     }

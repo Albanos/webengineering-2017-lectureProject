@@ -1,6 +1,7 @@
 package de.unikassel.webengineering.project.authentication;
 
 import de.unikassel.webengineering.project.authentication.AuthenticationService;
+import de.unikassel.webengineering.project.user.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureException;
 import org.slf4j.Logger;
@@ -24,9 +25,11 @@ public class JWTFilter extends GenericFilterBean {
     private static final Logger LOG = LoggerFactory.getLogger(JWTFilter.class);
 
     private AuthenticationService authenticationService;
+    private UserService userService;
 
-    public JWTFilter(AuthenticationService authenticationService) {
+    public JWTFilter(AuthenticationService authenticationService, UserService userService) {
         this.authenticationService = authenticationService;
+        this.userService = userService;
     }
 
 
@@ -42,8 +45,14 @@ public class JWTFilter extends GenericFilterBean {
 
         //Entspricht das Token nicht dem zurück-gelieferten: Gebe ein 401 zurück
         if(!StringUtils.startsWithIgnoreCase(auth,"Bearer ")){
-            LOG.warn("No authorization token submitted!");
-            httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+            //LOG.warn("No authorization token submitted!");
+
+            // Allow requests without a token.
+            LOG.debug("No token provided, setting to anonymous user");
+            userService.setAnonymous();
+            filterChain.doFilter(request, response);
+
+            //httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
             return;
         }
 
@@ -53,14 +62,17 @@ public class JWTFilter extends GenericFilterBean {
             Claims body = (Claims) authenticationService.parseToken(token);
             LOG.info("Successful login from={} with ID={}", body.getSubject(), body.getId());
 
+            userService.setCurrentUser(Long.parseLong(body.getId()), body.getSubject());
+            filterChain.doFilter(request, response);
+
             if(body.getId() == null){
                 LOG.info("ID from User={} is null. Do you forget to send the JWT-Token!?", body.getSubject());
             }
 
             //Setze im Request den User als aktuellen/aktuell angemeldeten User
-            authenticationService.setUser(Long.parseLong(body.getId()), body.getSubject());
+            //authenticationService.setUser(Long.parseLong(body.getId()), body.getSubject());
 
-            filterChain.doFilter(request, response);
+//            filterChain.doFilter(request, response);
         } catch (SignatureException e) {
             LOG.warn("Token is invalid: {}", token);
             httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

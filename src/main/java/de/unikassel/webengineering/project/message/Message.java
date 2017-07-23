@@ -17,12 +17,10 @@ public class Message {
     @GeneratedValue
     private Long id;
 
-    //@ManyToOne(optional = false)
     @OneToOne
     @JoinColumn(name="AUTHOR_ID")
     private User author;
 
-    //@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OneToOne
     @JoinColumn(name="TO_USER_ID")
     private User toUser;
