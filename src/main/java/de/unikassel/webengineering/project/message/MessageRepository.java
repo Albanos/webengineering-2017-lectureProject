@@ -15,4 +15,5 @@ import java.util.List;
 public interface MessageRepository extends CrudRepository<Message, Long> {
 
     List<Message> findByToUser(@Param("toUser") User user );
+    List<Message> findAll();
 }

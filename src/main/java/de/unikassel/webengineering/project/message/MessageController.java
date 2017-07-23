@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 /**
  * @author Luan Hajzeraj on 08.07.2017.
@@ -38,13 +40,13 @@ public class MessageController {
     }
 
     @RequestMapping(value = "api/message/all", method = RequestMethod.GET)
-    public Iterable<Message> getAllMessages(){
+    public List<Message> getAllMessages(){
         return messageService.getAllMessages();
     }
 
 
     @RequestMapping(value = "/api/message/myMessages", method = RequestMethod.GET)
-    public Iterable<Message> getMessagesOfActualUsser(){
+    public List<Message> getMessagesOfActualUser(){
         return messageService.getMessagesOfActualUser(userService.getCurrentUser());
     }
 
