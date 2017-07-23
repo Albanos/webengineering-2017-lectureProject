@@ -43,17 +43,31 @@ public class UserService {
         userResponse.setUserText(user.getUsertext());
 
         for(User u : user.getFollowI()){
-            userResponse.getFollowI().add(u.getId());
+            //userResponse.getFollowI().add(u.getId());
+            userResponse.getFollowI().add(u);
         }
         for(User u : user.getFollowMe()){
-            userResponse.getFollowMe().add(u.getId());
+            //userResponse.getFollowMe().add(u.getId());
+            userResponse.getFollowMe().add(u);
         }
 
+        /*
         Iterator it = userResponse.getFollowI().iterator();
         while(it.hasNext()){
+
             Long l = (Long) it.next();
             if(userResponse.getFollowMe().contains(l)){
                 userResponse.getMatches().add(l);
+
+            }
+
+
+        }
+        */
+
+        for(User u : userResponse.getFollowI()){
+            if(userResponse.getFollowMe().contains(u)){
+                userResponse.getMatches().add(u);
             }
         }
 

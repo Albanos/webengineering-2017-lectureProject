@@ -16,14 +16,24 @@ public class UserResponse {
     private Long id;
     private String userName;
     private String userText;
-    private HashSet<Long> followI;
-    private HashSet<Long> followMe;
-    private HashSet<Long> matches;
+    /*
+    private HashSet<User> followI;
+    private HashSet<User> followMe;
+    private HashSet<User> matches;
+    */
+    private HashSet<User> followI;
+    private HashSet<User> followMe;
+    private HashSet<User> matches;
 
     public UserResponse(){
+        /*
         followI = new HashSet<Long>();
         followMe = new HashSet<Long>();
         matches = new HashSet<Long>();
+        */
+        followI = new HashSet<User>();
+        followMe = new HashSet<User>();
+        matches = new HashSet<User>();
     }
 
     public Long getId() {
@@ -50,24 +60,34 @@ public class UserResponse {
         this.userText = userText;
     }
 
-    /*
-    public ArrayList getFollowI() {
+    public HashSet<User> getFollowI() {
         return followI;
     }
 
-    public void setFollowI(ArrayList followI) {
+    public void setFollowI(HashSet<User> followI) {
         this.followI = followI;
     }
 
-    public ArrayList getFollowMe() {
+    public HashSet<User> getFollowMe() {
         return followMe;
     }
 
-    public void setFollowMe(ArrayList followMe) {
+    public void setFollowMe(HashSet<User> followMe) {
         this.followMe = followMe;
     }
-    */
 
+    public HashSet<User> getMatches() {
+        return matches;
+    }
+
+    public void setMatches(HashSet<User> matches) {
+        this.matches = matches;
+    }
+
+
+
+    //Keine ID's sondern User werden zurückgeliefert
+    /*
     public HashSet<Long> getFollowI() {
         return followI;
     }
@@ -91,4 +111,5 @@ public class UserResponse {
     public void setMatches(HashSet<Long> matches) {
         this.matches = matches;
     }
+    */
 }

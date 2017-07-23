@@ -80,6 +80,7 @@ public class User {
     public void setUsertext(String usertext) {
         this.usertext = usertext;
     }
+
     @JsonIgnore
     public Set<User> getFollowMe() {
         return followMe;
@@ -88,6 +89,7 @@ public class User {
     public void setFollowMe(Set<User> followMe) {
         this.followMe = followMe;
     }
+
     @JsonIgnore
     public Set<User> getFollowI() {
         return followI;
