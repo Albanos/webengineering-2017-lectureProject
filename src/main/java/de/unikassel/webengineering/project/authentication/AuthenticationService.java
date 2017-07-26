@@ -30,7 +30,10 @@ public class AuthenticationService {
     private String salt;
 
     //Start-Secret für das JWT-Token
-    String secret = "Severus Snape was a good guy!";
+    //String secret = "Severus Snape was a good guy!";
+
+    @Value("${authenticationService.jwt.secret}")
+    private String JWTSecret;
 
     public static class UserToken{
         //public User user;
@@ -56,7 +59,7 @@ public class AuthenticationService {
                 .setSubject(email)
                 //Integriere die ID des Benutzers in das token
                 .setId(user.getId().toString())
-                .signWith(SignatureAlgorithm.HS512,secret)
+                .signWith(SignatureAlgorithm.HS512,JWTSecret)
                 .compact();
 
 
@@ -72,7 +75,7 @@ public class AuthenticationService {
     //Parse das Token zu einem String, um es im JWTFilter auf validität prüfen zu können
     public Object parseToken(String jwtToken) {
         return Jwts.parser()
-                .setSigningKey(secret)
+                .setSigningKey(JWTSecret)
                 .parse(jwtToken)
                 .getBody();
     }

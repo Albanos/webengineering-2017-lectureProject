@@ -44,7 +44,6 @@ public class MessageController {
         return messageService.getAllMessages();
     }
 
-
     @RequestMapping(value = "/api/message/myMessages", method = RequestMethod.GET)
     public List<Message> getMessagesOfActualUser(){
         return messageService.getMessagesOfActualUser(userService.getCurrentUser());
