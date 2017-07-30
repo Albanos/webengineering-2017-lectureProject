@@ -3,6 +3,7 @@ package de.unikassel.webengineering.project.authentication;
 import de.unikassel.webengineering.project.authentication.AuthenticationService;
 import de.unikassel.webengineering.project.user.User;
 import de.unikassel.webengineering.project.user.UserResponse;
+import de.unikassel.webengineering.project.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService service;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "/api/user/login", method = RequestMethod.POST)
     public ResponseEntity<UserResponse> login(@RequestBody UserLogin userLogin){
 
@@ -52,4 +56,5 @@ public class AuthenticationController {
 
         return new ResponseEntity<UserResponse>(tokenResponse.userResponse ,headers, HttpStatus.OK);
     }
+
 }
