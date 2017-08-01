@@ -36,14 +36,8 @@ import ReactDOM from "react-dom";
  */
 
 //Import der Greeter-Komponente: Wir haben den obigen Code in eine eigene JS ausgelagert und nutzen sie hier
-import React from "react";
-import ReactDOM from "react-dom"
 
-import Greeter from "./components/greeter";
 
-import axios from "axios";
-
-import UserList from "./components/user_list";
 
 
 /*Nutzt ECS6-Syntax: Greife mit ({data}) auf das übergebene data-Objekt DIREKT zu und gebe in console data aus.
@@ -76,17 +70,25 @@ axios.get('/api/user')
 Test mit Axios: Etwas über POST anfragen, aber auch bspw. das JWT-token mitgeben. Wir testen dies durch login von
 User Luan
  */
-axios.post('/api/user/login',
-    {
+
+//"Globales" setzen des JWT-Tokens
+//axios.defaults.headers.common['Authorization'] = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMdWFuIiwianRpIjoiMSJ9.EXMOS1asys58SpOJRmn4pvbFj9eBQ91s7297pbBEwbJWunFQlkhYuWYoauCQXQfxue1U5wXxlmO_URILmTJ9qQ'
+//axios.defaults.headers.common['Authorization'] = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSb3ZpIiwianRpIjoiMiJ9.dU4mQ86RR6Oujg-5mGbFVCuzxOy3YhyqfRlaGD3j-2sGWHRa3UklrFq8qrvqsX8mPAloGg8qqaQm7cV355iYJQ'
+
+//axios.post('/api/user/login',
+  //  {
         // POST data
-        email: 'Luan',
-        password: 'TestPassword'
+    //    email: 'Luan',
+     //   password: 'TestPassword'
+    /*
     }, {
         // Configuration
         headers: {
             Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMdWFuIiwianRpIjoiMSJ9.EXMOS1asys58SpOJRmn4pvbFj9eBQ91s7297pbBEwbJWunFQlkhYuWYoauCQXQfxue1U5wXxlmO_URILmTJ9qQ'
         }
-    });
+     */
+    //
+// });
 
 /*
 ReactDOM.render(
@@ -99,8 +101,21 @@ ReactDOM.render(
 
 */
 
+import React from "react";
+import {CookiesProvider} from "react-cookie";
+import ReactDOM from "react-dom"
+
+import Authentication from "./components/authentication"
+import UserList from "./components/user_list";
+
+
 ReactDOM.render(
-    <div>
-        <UserList />
-    </div>,
+    // This component will insert a property cookies to each child.
+    <CookiesProvider>
+        <div>
+            <UserList />
+            <hr/>
+            <Authentication/>
+        </div>
+    </CookiesProvider>,
     document.getElementById('root'));

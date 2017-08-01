@@ -92,4 +92,17 @@ public class AuthenticationService {
     public String hashPassword(String password) {
         return DigestUtils.sha512Hex(salt + password);
     }
+
+    public UserResponse getActualLoggedInUser(){
+        User user = userService.getCurrentUser();
+
+        User userByID = userService.getUserByID(user.getId());
+        if(userByID == null){
+            LOG.info("The actual User is anonymus!");
+            return null;
+        }
+        UserResponse userResponse = new UserResponse(userByID);
+
+        return userResponse;
+    }
 }

@@ -36,7 +36,7 @@ class UserList extends React.Component {
 
     render() {
         return(
-            <div>
+            <div className="component">
                 <h1>List of all Users</h1>
                 <ul>
                     {this.renderUsers()}

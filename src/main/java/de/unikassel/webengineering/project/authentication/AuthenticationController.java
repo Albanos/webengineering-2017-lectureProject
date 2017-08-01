@@ -54,7 +54,21 @@ public class AuthenticationController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization","Bearer "+tokenResponse.token);
 
+        //userService.setCurrentUser(tokenResponse.userResponse.getId(), tokenResponse.userResponse.getUserName());
+
         return new ResponseEntity<UserResponse>(tokenResponse.userResponse ,headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/api/user/actualUser", method = RequestMethod.GET)
+    public ResponseEntity<UserResponse> getActualLoggedInUser(){
+        UserResponse userResponse = service.getActualLoggedInUser();
+        if(userResponse == null){
+            return new ResponseEntity<UserResponse>(userResponse, HttpStatus.BAD_REQUEST);
+        }
+        else{
+            return new ResponseEntity<UserResponse>(userResponse, HttpStatus.OK);
+        }
+
     }
 
 }

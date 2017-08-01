@@ -18,7 +18,7 @@ public class UserResponse {
     private HashSet<User> followMe = new HashSet<>();
     private HashSet<User> matches = new HashSet<>();
 
-    UserResponse(User user){
+    public UserResponse(User user){
         id= user.getId();
         userName= user.getEmail();
         userText = user.getUsertext();

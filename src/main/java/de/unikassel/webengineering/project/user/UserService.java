@@ -35,6 +35,11 @@ public class UserService {
         //return userRepository.findByEmailAndPassword(email, password);
 
         User user = userRepository.findByEmailAndPassword(email,password);
+        //Wenn User nicht existiert: baue keinen User response, sondern gib Problem nach oben weiter, zum
+        //AuthenticationController
+        if(user == null){
+            return null;
+        }
         UserResponse userResponse = new UserResponse(user);
 
         return userResponse;
