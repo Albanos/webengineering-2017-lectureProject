@@ -104,18 +104,37 @@ ReactDOM.render(
 import React from "react";
 import {CookiesProvider} from "react-cookie";
 import ReactDOM from "react-dom"
+import {HashRouter as Router, Link, Route, Switch} from "react-router-dom";
 
 import Authentication from "./components/authentication"
 import UserList from "./components/user_list";
+import CurrentUser from "./components/current_user"
 
 
 ReactDOM.render(
     // This component will insert a property cookies to each child.
     <CookiesProvider>
-        <div>
-            <UserList />
-            <hr/>
-            <Authentication/>
-        </div>
+        <Router>
+            <div>
+                <div className="menu">
+                    <Link to="/user/login">Login</Link>
+                    <Link to="/user/actual">Actual User</Link>
+                    <Link to="/user/all">All Users</Link>
+                </div>
+                <Switch>
+                    {/*Authentication*/}
+                    <Route path="/user/login" component={Authentication}/>
+
+                    {/*actual logged in user*/}
+                    <Route path="/user/actual" component={CurrentUser}/>
+
+                    {/*List of all users*/}
+                    <Route path="/user/all" component={UserList}/>
+
+                    {/*Default route: Weggelassen... Syntax:<Route path="/" component={PostList}/>*/}
+                </Switch>
+            </div>
+        </Router>
+
     </CookiesProvider>,
     document.getElementById('root'));

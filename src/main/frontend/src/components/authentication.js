@@ -32,7 +32,7 @@ class Authentication extends React.Component {
     //Wird geladen, bevor eine Komponente angezeigt wird
     componentWillMount() {
         const auth = this.cookies.get('auth');
-
+        console.log("LADEN");
         if(auth){
             axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`;
             User.email = auth.user.email;

@@ -15,18 +15,26 @@ class CurrentUser extends React.Component {
             matches:[],
             followI:[],
             followMe:[]
-
-        }
+        };
+        //this.cookies = this.props.cookies;
     }
 
     // This function is called before render() to initialize its state.
     componentWillMount() {
+        //const auth = this.cookies.get('auth');
+        //let token = '';
+
+        //if(auth){
+          //  token = `Bearer ${auth.token}`;
+        //}
+
+        /*
         axios.get('/api/user/actualUser',
             {
                 // Configuration --> aktuell: User Luan, statisch...
-                headers: {
-                    Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMdWFuIiwianRpIjoiMSJ9.EXMOS1asys58SpOJRmn4pvbFj9eBQ91s7297pbBEwbJWunFQlkhYuWYoauCQXQfxue1U5wXxlmO_URILmTJ9qQ'
-                }
+                //headers: {
+                  //  Authorization: ''
+                //}
             })
             .then(({data}) => {
                 this.setState({
@@ -36,6 +44,7 @@ class CurrentUser extends React.Component {
                     followMe: data.followMe
                 })
             });
+            */
     }
 
     renderUserMatches() {
@@ -68,6 +77,7 @@ class CurrentUser extends React.Component {
         }));
     }
 
+    /*
     render() {
         return(
             <div className="component">
@@ -87,6 +97,18 @@ class CurrentUser extends React.Component {
                     <ul>
                         {this.renderUserMatches()}
                     </ul>
+                </ul>
+            </div>
+        );
+    }
+    */
+
+    render() {
+        return(
+            <div className="component">
+                <h1>Actual logged-In-User</h1>
+                <ul>
+                    TEMPLATE
                 </ul>
             </div>
         );
