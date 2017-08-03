@@ -48,4 +48,19 @@ public class UserController {
         LOG.info("Delete USer with ID={}", id);
         userService.deleteUSerByID(id);
     }
+
+    @RequestMapping(value = "/api/user/nextUnread", method = RequestMethod.GET)
+    public User getNextUnreadUser(){
+        LOG.info("Get a User, that not read text");
+
+        User user = userService.getNextUnreadUser();
+
+        return user;
+    }
+
+    @RequestMapping(value = "/api/user/like", method = RequestMethod.POST)
+    public void likeTextOfUserWithID(@RequestBody User user){
+
+        userService.likeTextOfUserWithID(user.getId());
+    }
 }

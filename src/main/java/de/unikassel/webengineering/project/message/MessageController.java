@@ -49,5 +49,4 @@ public class MessageController {
         return messageService.getMessagesOfActualUser(userService.getCurrentUser());
     }
 
-
 }

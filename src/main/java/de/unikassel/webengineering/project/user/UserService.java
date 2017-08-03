@@ -1,5 +1,6 @@
 package de.unikassel.webengineering.project.user;
 
+import org.hibernate.mapping.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
+import java.util.*;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Luan Hajzeraj on 29.06.2017.
@@ -90,6 +93,56 @@ public class UserService {
      */
     public boolean isAnonymous() {
         return getCurrentUser().getId() == -1L;
+    }
+
+    public User getNextUnreadUser(){
+        /*
+        User actualLoggedInUser = getCurrentUser();
+
+        User nowUser = userRepository.findOne(actualLoggedInUser.getId());
+
+        Set<Long> temp2 = new HashSet<>();
+
+        for(User u : nowUser.getFollowI()){
+            temp2.add(u.getId());
+        }
+
+        User temp = userRepository.findByIdNotIn(temp2);
+        */
+
+        User me = getCurrentUser();
+        User meExact = userRepository.findOne(me.getId());
+
+
+
+        List<Long> followI = meExact.getFollowI().stream().map(User::getId).collect(Collectors.toList());
+        followI.add(me.getId());
+
+
+        //User oneByIdNotIn = userRepository.findFirstByIdNotIn(followI);
+        //User oneByIdNotIn = userRepository.findOneByIdNotIn(followI);
+        //User oneByIdNotIn = userRepository.findLastByIdNotIn(followI);
+        List<User> usersIdNotIn = userRepository.findAllByIdNotIn(followI);
+
+        Random randomizer = new Random();
+        User random = usersIdNotIn.get(randomizer.nextInt(usersIdNotIn.size()));
+
+        return random;
+        //return oneByIdNotIn;
+
+
+
+    }
+
+    public void likeTextOfUserWithID(Long id){
+        User me = getCurrentUser();
+        User meExact = userRepository.findOne(me.getId());
+
+        User userThatILike = userRepository.findOne(id);
+
+        meExact.getFollowI().add(userThatILike);
+
+        userRepository.save(meExact);
     }
 
 

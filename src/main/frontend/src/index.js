@@ -109,17 +109,25 @@ import {HashRouter as Router, Link, Route, Switch} from "react-router-dom";
 import Authentication from "./components/authentication"
 import UserList from "./components/user_list";
 import CurrentUser from "./components/current_user"
+import User from "./util/User"
+import MatchGame from "./components/match_game"
 
 
 ReactDOM.render(
     // This component will insert a property cookies to each child.
     <CookiesProvider>
+
         <Router>
             <div>
                 <div className="menu">
                     <Link to="/user/login">Login</Link>
+
                     <Link to="/user/actual">Actual User</Link>
+
+
                     <Link to="/user/all">All Users</Link>
+
+                    <Link to="/matchgame">Matchgame</Link>
                 </div>
                 <Switch>
                     {/*Authentication*/}
@@ -130,6 +138,9 @@ ReactDOM.render(
 
                     {/*List of all users*/}
                     <Route path="/user/all" component={UserList}/>
+
+                    {/*Matchgame*/}
+                    <Route path="/matchgame" component={MatchGame}/>
 
                     {/*Default route: Weggelassen... Syntax:<Route path="/" component={PostList}/>*/}
                 </Switch>

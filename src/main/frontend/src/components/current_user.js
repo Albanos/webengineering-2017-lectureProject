@@ -5,46 +5,39 @@
 
 import React from "react";
 import axios from "axios";
+import {withCookies} from "react-cookie";
 
 
 class CurrentUser extends React.Component {
     constructor(props) {
-        super();
+        super(props);
         this.state = {
             user: [],
             matches:[],
             followI:[],
             followMe:[]
         };
-        //this.cookies = this.props.cookies;
+        this.cookies = this.props.cookies;
     }
 
     // This function is called before render() to initialize its state.
     componentWillMount() {
-        //const auth = this.cookies.get('auth');
-        //let token = '';
+        const auth = this.cookies.get('auth');
+        if(auth){
+            axios.defaults.headers.common['Authorization'] = auth.token;
 
-        //if(auth){
-          //  token = `Bearer ${auth.token}`;
-        //}
+            axios.get('/api/user/actualUser')
+                .then(({data}) => {
+                    this.setState({
+                        user: data,
+                        matches: data.matches,
+                        followI: data.followI,
+                        followMe: data.followMe
+                    })
+                });
+        }
 
-        /*
-        axios.get('/api/user/actualUser',
-            {
-                // Configuration --> aktuell: User Luan, statisch...
-                //headers: {
-                  //  Authorization: ''
-                //}
-            })
-            .then(({data}) => {
-                this.setState({
-                    user: data,
-                    matches: data.matches,
-                    followI: data.followI,
-                    followMe: data.followMe
-                })
-            });
-            */
+
     }
 
     renderUserMatches() {
@@ -77,7 +70,7 @@ class CurrentUser extends React.Component {
         }));
     }
 
-    /*
+
     render() {
         return(
             <div className="component">
@@ -101,8 +94,8 @@ class CurrentUser extends React.Component {
             </div>
         );
     }
-    */
 
+    /*
     render() {
         return(
             <div className="component">
@@ -113,7 +106,8 @@ class CurrentUser extends React.Component {
             </div>
         );
     }
+    */
 }
 
 
-export default CurrentUser;
+export default withCookies(CurrentUser);

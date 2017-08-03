@@ -32,9 +32,8 @@ class Authentication extends React.Component {
     //Wird geladen, bevor eine Komponente angezeigt wird
     componentWillMount() {
         const auth = this.cookies.get('auth');
-        console.log("LADEN");
         if(auth){
-            axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`;
+            axios.defaults.headers.common['Authorization'] = auth.token;
             User.email = auth.user.email;
             User.id = auth.user.id;
         }
@@ -71,14 +70,14 @@ class Authentication extends React.Component {
                 return (status >= 200 && status < 300) || status == 401
             }
         })
-            .then(({data, status}) => {
+            .then(({data, status, headers}) => {
                 /*
                 Je nachdem, was wir erhalten: 200 --> Alles wie zuvor. 401 --> Setze error auf true und rendere
                 error-message
                 */
                 switch(status) {
                     case 200:
-                        axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+                        axios.defaults.headers.common['Authorization'] = headers.authorization;
 
                         User.email = data.userName;
                         User.id = data.id;
@@ -87,7 +86,7 @@ class Authentication extends React.Component {
 
                         // Store authentication values even after refresh.
                         this.cookies.set('auth', {
-                            token: data.token,
+                            token: headers.authorization,
                             user: User
                         }, {path: '/'});
 
