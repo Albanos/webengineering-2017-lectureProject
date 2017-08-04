@@ -20,6 +20,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "babel-preset-stage-1": "6.24.1",
+    "history": "^4.6.3",
     "react": "15.5.4",
     "react-cookie": "^2.0.8",
     "react-dom": "^15.5.4",

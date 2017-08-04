@@ -43,7 +43,9 @@ class MatchGame extends React.Component {
 
     }
 
-    handleLike(){
+    handleLike(event){
+        //event.preventDefault();
+
         let ID = this.state.id
         let rs = Number(ID)
         //ID = IDL
@@ -56,7 +58,7 @@ class MatchGame extends React.Component {
                 id:rs
             }
         });
-
+        this.forceUpdate();
 
         /*
         axios.get('/api/user/like', {
@@ -79,10 +81,13 @@ class MatchGame extends React.Component {
         */
 
 
-        this.forceUpdate();
+
+
 
 
     }
+
+    handleDislike(event){event.preventDefault(); this.componentWillMount()}
 
     render() {
         return(
@@ -92,7 +97,7 @@ class MatchGame extends React.Component {
                 <br/>
                 <span onClick={this.handleLike}>Like</span>
                 <br/>
-                <span>Dislike</span>
+                <span onClick={this.handleDislike}>Dislike</span>
             </div>
         );
     }

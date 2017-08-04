@@ -5,14 +5,18 @@
 import axios from "axios";
 import React from "react";
 import {withCookies} from "react-cookie";
+import {HashRouter as Router, Route, Link} from 'react-router-dom';
+
 
 import User from "../util/User";
+import SignUp from "./signUp";
 
 
 class Authentication extends React.Component {
     /*
     Erklärung des Codes: Siehe Vorlesung 7, ab etwa min 45
     */
+
 
     constructor(props) {
         super(props);
@@ -113,6 +117,7 @@ class Authentication extends React.Component {
         let component = null;
         if (User.isNotAuthenticated()) {
             component =
+                <Router>
                 <form onSubmit={this.handleSubmit}>
                     {/*Note that the HTML structure will be changed later when we add Bootstrap/CSS*/}
                     <label>
@@ -125,7 +130,15 @@ class Authentication extends React.Component {
                                onChange={this.handlePasswordChange}/>
                     </label>
                     <input type="submit" value="Submit"/>
+                    <br/>
+                    <br/>
+                    <div>
+                        <Route path="/signUp" component={SignUp}/>
+                        <Link to="/signUp">Sign Up</Link>
+                    </div>
+                    {/*<span onClick={this.handleSignUp}>Sign up</span>*/}
                 </form>
+                </Router>
         }
         else{
             component=
@@ -133,11 +146,7 @@ class Authentication extends React.Component {
         }
 
 
-
-
-
         return (
-
 
             <div className="component">
                 <h1>Authentication</h1>
@@ -155,6 +164,7 @@ class Authentication extends React.Component {
                 </div>
                 }
             </div>
+
         );
     }
 }

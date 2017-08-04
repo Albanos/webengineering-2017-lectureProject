@@ -111,6 +111,7 @@ import UserList from "./components/user_list";
 import CurrentUser from "./components/current_user"
 import User from "./util/User"
 import MatchGame from "./components/match_game"
+import SignUp from "./components/signUp"
 
 
 ReactDOM.render(
@@ -123,7 +124,6 @@ ReactDOM.render(
                     <Link to="/user/login">Login</Link>
 
                     <Link to="/user/actual">Actual User</Link>
-
 
                     <Link to="/user/all">All Users</Link>
 
@@ -141,6 +141,9 @@ ReactDOM.render(
 
                     {/*Matchgame*/}
                     <Route path="/matchgame" component={MatchGame}/>
+
+                    {/* Sign-Up*/}
+                    <Route path="/signUp" component={SignUp}/>
 
                     {/*Default route: Weggelassen... Syntax:<Route path="/" component={PostList}/>*/}
                 </Switch>
