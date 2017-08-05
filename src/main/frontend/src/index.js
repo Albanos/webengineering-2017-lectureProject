@@ -119,6 +119,7 @@ ReactDOM.render(
     <CookiesProvider>
 
         <Router>
+
             <div>
                 <div className="menu">
                     <Link to="/user/login">Login</Link>
@@ -129,6 +130,7 @@ ReactDOM.render(
 
                     <Link to="/matchgame">Matchgame</Link>
                 </div>
+
                 <Switch>
                     {/*Authentication*/}
                     <Route path="/user/login" component={Authentication}/>

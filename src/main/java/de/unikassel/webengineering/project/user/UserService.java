@@ -1,12 +1,14 @@
 package de.unikassel.webengineering.project.user;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.mapping.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.*;
 import java.util.Collection;
@@ -22,6 +24,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Value("${authenticationService.salt}")
+    private String salt;
 
     public List<User> getUserList(){
         //return userRepository.getUserList();
@@ -50,6 +55,8 @@ public class UserService {
     }
 
     public void addUser(User user){
+        String hashedPassword = hashPassword(user.getPassword());
+        user.setPassword(hashedPassword);
 
         userRepository.save(user);
     }
@@ -144,6 +151,12 @@ public class UserService {
 
         userRepository.save(meExact);
     }
+
+    //Gibt gehastes Password zurück
+    public String hashPassword(String password) {
+        return DigestUtils.sha512Hex(salt + password);
+    }
+
 
 
 

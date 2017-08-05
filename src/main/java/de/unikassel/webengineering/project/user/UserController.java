@@ -3,6 +3,8 @@ package de.unikassel.webengineering.project.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,13 +24,19 @@ public class UserController {
     }
 
     @RequestMapping(value = "/api/user", method = RequestMethod.POST)
-    public void addUser(@RequestBody User newUser){
+    public ResponseEntity addUser(@RequestBody User newUser){
+        //Wurde so gelöst, weil das setzen auf undefined in signUp.js Warnings verursacht.
+        //Dies würde null übergeben, verursacht aber warnings. Um diese auszuschliessen, werden
+        //die übergebenen Werte in singUp.js NICHT auf "undefined" sondern auf "" gesetzt.
+        if(newUser.getEmail() == "" || newUser.getPassword() == "" ||
+                newUser.getUsertext() == ""){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         userService.addUser(newUser);
 
-        /*
-        LOG.info("Add user: ID={}, email={}, password={}, text={}",
-                newUser.getId(), newUser.getEmail(), newUser.getPassword(),newUser.getUserText());
-        */
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @RequestMapping(value = "/api/user", method = RequestMethod.GET)

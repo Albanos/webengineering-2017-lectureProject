@@ -5,7 +5,8 @@
 import axios from "axios";
 import React from "react";
 import {withCookies} from "react-cookie";
-import {HashRouter as Router, Route, Link} from 'react-router-dom';
+import {HashRouter as Router, Route} from 'react-router-dom';
+import {Link} from"react-router-dom";
 
 
 import User from "../util/User";
