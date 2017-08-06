@@ -1,5 +1,6 @@
 package de.unikassel.webengineering.project.message;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.unikassel.webengineering.project.user.User;
 
 import javax.persistence.*;
@@ -28,10 +29,20 @@ public class Message {
     private Date timestamp;
     private String message;
 
+    private boolean isRead = false;
+
     public Message(){
 
     }
 
+    @JsonIgnore
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
+    }
 
     public Long getId() {
         return id;

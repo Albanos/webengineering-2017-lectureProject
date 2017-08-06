@@ -1,41 +1,37 @@
 /**
-    * @author Luan Hajzeraj on 30.07.2017.
-    */
+ * @author Luan Hajzeraj on 30.07.2017.
+ */
 
 import React from "react";
-import axios from "axios";
+import {getAllUsers} from "../util/Http";
 
 
 class UserList extends React.Component {
     constructor(props) {
-        super();
+        super(props);
         this.state = {
-                users: []
+            users: []
         }
     }
 
     // This function is called before render() to initialize its state.
     componentWillMount() {
-        axios.get('/api/user')
-            .then(({data}) => {
-                this.setState({
-                    users: data
-                })
-            });
+        getAllUsers()
+            .then((response) => this.setState({users:response.data}));
     }
 
     renderUsers() {
-        return this.state.users.map((user => {
+        return this.state.users.map(user => {
             return (
                 <li key={user.id}>
                     {user.email} , {user.usertext}
                 </li>
             );
-        }));
+        });
     }
 
     render() {
-        return(
+        return (
             <div className="component">
                 <h1>List of all Users</h1>
                 <ul>

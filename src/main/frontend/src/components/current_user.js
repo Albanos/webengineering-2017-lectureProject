@@ -1,56 +1,48 @@
 /**
-    * @author Luan Hajzeraj on 30.07.2017.
-    */
+ * @author Luan Hajzeraj on 30.07.2017.
+ */
 
 
-import React from "react";
-import axios from "axios";
-import {withCookies} from "react-cookie";
+import React from 'react';
+import {Link} from 'react-router-dom';
 
+import {getActualUser} from '../util/Http';
 
 class CurrentUser extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: [],
-            matches:[],
-            followI:[],
-            followMe:[]
+            user: {},
+            matches: [],
+            followI: [],
+            followMe: []
         };
-        this.cookies = this.props.cookies;
     }
 
     // This function is called before render() to initialize its state.
     componentWillMount() {
-        const auth = this.cookies.get('auth');
-        if(auth){
-            axios.defaults.headers.common['Authorization'] = auth.token;
-
-            axios.get('/api/user/actualUser')
-                .then(({data}) => {
-                    this.setState({
-                        user: data,
-                        matches: data.matches,
-                        followI: data.followI,
-                        followMe: data.followMe
-                    })
+        getActualUser()
+            .then(({data}) => {
+                this.setState({
+                    user: data,
+                    matches: data.matches,
+                    followI: data.followI,
+                    followMe: data.followMe
                 });
-        }
-
-
+            });
     }
 
     renderUserMatches() {
         return this.state.matches.map((userEntry => {
             return (
                 <li key={userEntry.id}>
-                    {userEntry.email}
+                  <Link to={'/api/chat/'+userEntry.id} > {userEntry.email} </Link>
                 </li>
             );
         }));
     }
 
-    renderFollowI(){
+    renderFollowI() {
         return this.state.followI.map((userEntry => {
             return (
                 <li key={userEntry.id}>
@@ -60,7 +52,7 @@ class CurrentUser extends React.Component {
         }));
     }
 
-    renderFollowMe(){
+    renderFollowMe() {
         return this.state.followMe.map((userEntry => {
             return (
                 <li key={userEntry.id}>
@@ -72,7 +64,7 @@ class CurrentUser extends React.Component {
 
 
     render() {
-        return(
+        return (
             <div className="component">
                 <h1>Actual logged-In-User</h1>
                 <ul>
@@ -94,20 +86,7 @@ class CurrentUser extends React.Component {
             </div>
         );
     }
-
-    /*
-    render() {
-        return(
-            <div className="component">
-                <h1>Actual logged-In-User</h1>
-                <ul>
-                    TEMPLATE
-                </ul>
-            </div>
-        );
-    }
-    */
 }
 
 
-export default withCookies(CurrentUser);
+export default CurrentUser;

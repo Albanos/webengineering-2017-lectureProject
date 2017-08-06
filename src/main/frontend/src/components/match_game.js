@@ -1,120 +1,58 @@
 /**
-    * @author Luan Hajzeraj on 03.08.2017.
-    */
-
-/**
- * @author Luan Hajzeraj on 30.07.2017.
+ * @author Luan Hajzeraj on 03.08.2017.
  */
 
 
 import React from "react";
-import axios from "axios";
-import {withCookies} from "react-cookie";
 
+import {getNextUnreadUsertext, likeUsertext} from "../util/Http";
 
 class MatchGame extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            text:[],
-            id:undefined
+            text: [],
+            id: undefined
         };
 
         this.handleLike = this.handleLike.bind(this);
-        this.cookies = this.props.cookies;
     }
 
     // This function is called before render() to initialize its state.
     componentWillMount() {
-        const auth = this.cookies.get('auth');
-        if(auth){
-            axios.defaults.headers.common['Authorization'] = auth.token;
-
-            axios.get('/api/user/nextUnread')
-                .then((response) => {
-                    this.setState({
-                        text: response.data.usertext,
-                        id:response.data.id
-                    })
-
+        getNextUnreadUsertext()
+            .then((response) => {
+                this.setState({
+                    text: response.data.usertext,
+                    id: response.data.id
                 });
-        }
-
-
-    }
-
-    handleLike(event){
-        //event.preventDefault();
-
-        let ID = this.state.id
-        let rs = Number(ID)
-        //ID = IDL
-        console.log(ID)
-
-        axios({
-            method: 'post',
-            url: '/api/user/like',
-            data: {
-                id:rs
-            }
-        });
-        this.forceUpdate();
-
-        /*
-        axios.get('/api/user/like', {
-            params: {
-                id: ID
-            }
-        })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
             });
-        */
-
-        /*
-        axios.post('/api/user/like/{id}', {
-            id: ID
-        });
-        */
-
-
-
-
-
-
     }
 
-    handleDislike(event){event.preventDefault(); this.componentWillMount()}
+    handleLike() {
+        likeUsertext(this.state.id)
+            .then(() => {
+                this.componentWillMount();
+            });
+    }
+
+    handleDislike(event) {
+        event.preventDefault();
+        this.componentWillMount();
+    }
 
     render() {
-        return(
+        return (
             <div className="component">
                 <h1>Match-Game</h1>
                 {this.state.text}
                 <br/>
                 <span onClick={this.handleLike}>Like</span>
                 <br/>
-                <span onClick={this.handleDislike}>Dislike</span>
+                <span onClick={this.handleDislike.bind(this)}>Dislike</span>
             </div>
         );
     }
-
-    /*
-     render() {
-     return(
-     <div className="component">
-     <h1>Actual logged-In-User</h1>
-     <ul>
-     TEMPLATE
-     </ul>
-     </div>
-     );
-     }
-     */
 }
 
-
-export default withCookies(MatchGame);
+export default MatchGame;

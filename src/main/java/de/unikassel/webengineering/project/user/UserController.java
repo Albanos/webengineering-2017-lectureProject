@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/api/user/{id}", method = RequestMethod.GET)
-    public User getUserByEmailAndPassword(@PathVariable Long id){
+    public User getUserByID(@PathVariable Long id){
         LOG.info("Return the User with ID={}", id);
         return userService.getUserByID(id);
     }

@@ -105,31 +105,23 @@ import React from "react";
 import {CookiesProvider} from "react-cookie";
 import ReactDOM from "react-dom"
 import {HashRouter as Router, Link, Route, Switch} from "react-router-dom";
+import {history} from "react-router";
 
-import Authentication from "./components/authentication"
+import Authentication from "./components/authentication";
 import UserList from "./components/user_list";
-import CurrentUser from "./components/current_user"
-import User from "./util/User"
-import MatchGame from "./components/match_game"
-import SignUp from "./components/signUp"
+import CurrentUser from "./components/current_user";
+import MatchGame from "./components/match_game";
+import SignUp from "./components/signUp";
+import NavBar from "./components/navBar";
+import Chat from "./components/chat"
 
 
 ReactDOM.render(
     // This component will insert a property cookies to each child.
     <CookiesProvider>
-
-        <Router>
-
+        <Router history={history}>
             <div>
-                <div className="menu">
-                    <Link to="/user/login">Login</Link>
-
-                    <Link to="/user/actual">Actual User</Link>
-
-                    <Link to="/user/all">All Users</Link>
-
-                    <Link to="/matchgame">Matchgame</Link>
-                </div>
+                <NavBar/>
 
                 <Switch>
                     {/*Authentication*/}
@@ -146,6 +138,9 @@ ReactDOM.render(
 
                     {/* Sign-Up*/}
                     <Route path="/signUp" component={SignUp}/>
+
+                    {/*Chat */}
+                    <Route path="/api/chat/:id" component={Chat}/>
 
                     {/*Default route: Weggelassen... Syntax:<Route path="/" component={PostList}/>*/}
                 </Switch>

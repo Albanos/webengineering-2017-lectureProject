@@ -1,10 +1,10 @@
 /**
-    * @author Luan Hajzeraj on 04.08.2017.
-    */
+ * @author Luan Hajzeraj on 04.08.2017.
+ */
 
 import React from "react";
-import axios from "axios";
-import {withCookies} from "react-cookie";
+
+import {signUp} from "../util/Http";
 import User from "../util/User";
 
 // A general counter component.
@@ -23,7 +23,6 @@ class SignUp extends React.Component {
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleUserTextChange = this.handleUserTextChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.cookies = this.props.cookies;
     }
 
     handleEmailChange(event) {
@@ -35,71 +34,16 @@ class SignUp extends React.Component {
         this.setState({password: event.target.value});
     }
 
-    handleUserTextChange(event){
+    handleUserTextChange(event) {
         this.setState({usertext: event.target.value});
     }
 
-    handleSubmit(event){
+    handleSubmit(event) {
         event.preventDefault();
 
-        axios.post('/api/user', this.state, {
-            // We allow a status code of 401 (unauthorized). Otherwise it is interpreted as an error and we can't
-            // check the HTTP status code.
-            validateStatus: (status) => {
-                return (status >= 200 && status < 300) || status == 400
-            }
-        })
-            .then(({data, status}) => {
-                /*
-                 Je nachdem, was wir erhalten: 200 --> Alles wie zuvor. 400 --> Setze error auf true und rendere
-                 error-message
-                 */
-                switch(status) {
-                    case 200:
-
-                        this.setState({error: false});
-
-
-
-
-
-                        // Since we do not have the User as part of the component's state,
-                        // calling this.SetState() makes no sense. Instead we have to manually
-                        // force the component to update.
-                        this.forceUpdate();
-
-
-
-                        break;
-                    case 400:
-                        this.setState({error: true});
-
-                        this.forceUpdate();
-                        break;
-                }
-            });
-
-        axios.post('/api/user/login', this.state)
-            .then(({data, status, headers}) => {
-                //console.log(response);
-
-                //Die id muss auch gesetzt werden, da sie über die isAuthenticated()-Methode des Users
-                //zurückgegeben wird
-                User.email = data.userName;
-                User.id = data.id;
-
-
-                this.cookies.set('auth', {
-                    token: headers.authorization,
-                    user: User
-                }, {path: '/'});
-            });
-
-
-
-
-
-
+        signUp(this.state.email, this.state.password, this.state.usertext)
+            .then(() => this.setState({error: false}))
+            .catch(() => this.setState({error: true}));
     }
 
     render() {
@@ -150,5 +94,4 @@ class SignUp extends React.Component {
     }
 }
 
-
-export default withCookies(SignUp);
+export default SignUp;

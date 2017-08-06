@@ -15,6 +15,15 @@ class User {
     isNotAuthenticated() {
         return !this.isAuthenticated();
     }
+
+    setUser(email, id){
+        this.email = email;
+        this.id = id;
+    }
+
+    resetUser(){
+        this.setUser(undefined,-1);
+    }
 }
 
 // Singleton pattern in ES6.
