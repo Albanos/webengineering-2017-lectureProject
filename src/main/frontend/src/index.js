@@ -1,6 +1,6 @@
 /**
-    * @author Luan Hajzeraj on 26.07.2017.
-    */
+ * @author Luan Hajzeraj on 26.07.2017.
+ */
 
 
 
@@ -12,17 +12,17 @@
  */
 
 /*
-import React from "react";
-import ReactDOM from "react-dom";
+ import React from "react";
+ import ReactDOM from "react-dom";
 
-    class Greeter extends React.Component {
-        render() {
-            return <h1>Hello, {this.props.message}!</h1>
+ class Greeter extends React.Component {
+ render() {
+ return <h1>Hello, {this.props.message}!</h1>
 
-        }
-    }
+ }
+ }
 
-*/
+ */
 /*
  Zunächst: Finde in der index.html das Element "root" und binde den jeweiligen HTML-Code ein. Was ist aber, wenn
  ich Greeter öfter verwenden möchte? --> Dann muss dies wieder in ein eigenes <div>-Tag (siehe weiter unten)
@@ -38,37 +38,35 @@ import ReactDOM from "react-dom";
 //Import der Greeter-Komponente: Wir haben den obigen Code in eine eigene JS ausgelagert und nutzen sie hier
 
 
-
-
 /*Nutzt ECS6-Syntax: Greife mit ({data}) auf das übergebene data-Objekt DIREKT zu und gebe in console data aus.
-Im Grunde sorgen die geschweiften Klammern für den direkt-Zugriff...
-*/
-/*
-axios.get('http://www.mlesniak.com')
-    .then(({data}) =>
-        console.log(data)
-    );
-*/
-
-/*
-Weiteres Experiment mit axios: Greife direkt auf die Endpoints zu, gib mir also damit das Ergebnis dieser GET-Anfrage
-auf der Konsole aus
+ Im Grunde sorgen die geschweiften Klammern für den direkt-Zugriff...
  */
 /*
-axios.get('/api/user')
-    .then(({data}) => {
-       //console.log(data);
-
-        //Gib mir jedes Objekt einzeln aus
-        for(var user of data){
-            console.log(user);
-        }
-    });
-*/
+ axios.get('http://www.mlesniak.com')
+ .then(({data}) =>
+ console.log(data)
+ );
+ */
 
 /*
-Test mit Axios: Etwas über POST anfragen, aber auch bspw. das JWT-token mitgeben. Wir testen dies durch login von
-User Luan
+ Weiteres Experiment mit axios: Greife direkt auf die Endpoints zu, gib mir also damit das Ergebnis dieser GET-Anfrage
+ auf der Konsole aus
+ */
+/*
+ axios.get('/api/user')
+ .then(({data}) => {
+ //console.log(data);
+
+ //Gib mir jedes Objekt einzeln aus
+ for(var user of data){
+ console.log(user);
+ }
+ });
+ */
+
+/*
+ Test mit Axios: Etwas über POST anfragen, aber auch bspw. das JWT-token mitgeben. Wir testen dies durch login von
+ User Luan
  */
 
 //"Globales" setzen des JWT-Tokens
@@ -76,34 +74,35 @@ User Luan
 //axios.defaults.headers.common['Authorization'] = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSb3ZpIiwianRpIjoiMiJ9.dU4mQ86RR6Oujg-5mGbFVCuzxOy3YhyqfRlaGD3j-2sGWHRa3UklrFq8qrvqsX8mPAloGg8qqaQm7cV355iYJQ'
 
 //axios.post('/api/user/login',
-  //  {
-        // POST data
-    //    email: 'Luan',
-     //   password: 'TestPassword'
-    /*
-    }, {
-        // Configuration
-        headers: {
-            Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMdWFuIiwianRpIjoiMSJ9.EXMOS1asys58SpOJRmn4pvbFj9eBQ91s7297pbBEwbJWunFQlkhYuWYoauCQXQfxue1U5wXxlmO_URILmTJ9qQ'
-        }
-     */
-    //
+//  {
+// POST data
+//    email: 'Luan',
+//   password: 'TestPassword'
+/*
+ }, {
+ // Configuration
+ headers: {
+ Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMdWFuIiwianRpIjoiMSJ9.EXMOS1asys58SpOJRmn4pvbFj9eBQ91s7297pbBEwbJWunFQlkhYuWYoauCQXQfxue1U5wXxlmO_URILmTJ9qQ'
+ }
+ */
+//
 // });
 
 /*
-ReactDOM.render(
-    <div>
-        <Greeter message="Person 1"/>
-        <Greeter message="Person 2"/>
-        <Greeter />
-    </div>,
-    document.getElementById('root'));
+ ReactDOM.render(
+ <div>
+ <Greeter message="Person 1"/>
+ <Greeter message="Person 2"/>
+ <Greeter />
+ </div>,
+ document.getElementById('root'));
 
-*/
+ */
 
 import React from "react";
 import {CookiesProvider} from "react-cookie";
 import ReactDOM from "react-dom"
+import {I18nextProvider} from "react-i18next";
 import {HashRouter as Router, Link, Route, Switch} from "react-router-dom";
 import {history} from "react-router";
 
@@ -114,38 +113,41 @@ import MatchGame from "./components/match_game";
 import SignUp from "./components/signUp";
 import NavBar from "./components/navBar";
 import Chat from "./components/chat"
+import i18n from "./i18n";
+import User from "./util/User"
 
 
 ReactDOM.render(
     // This component will insert a property cookies to each child.
     <CookiesProvider>
-        <Router history={history}>
-            <div>
-                <NavBar/>
+        <I18nextProvider i18n={i18n}>
+            <Router history={history}>
+                <div>
+                    <NavBar/>
 
-                <Switch>
-                    {/*Authentication*/}
-                    <Route path="/user/login" component={Authentication}/>
+                    <Switch>
+                        {/*Authentication*/}
+                        <Route path="/user/login" component={Authentication}/>
 
-                    {/*actual logged in user*/}
-                    <Route path="/user/actual" component={CurrentUser}/>
+                        {/*actual logged in user*/}
+                        <Route path="/user/actual" component={CurrentUser}/>
 
-                    {/*List of all users*/}
-                    <Route path="/user/all" component={UserList}/>
+                        {/*List of all users*/}
+                        <Route path="/user/all" component={UserList}/>
 
-                    {/*Matchgame*/}
-                    <Route path="/matchgame" component={MatchGame}/>
+                        {/*Matchgame*/}
+                        <Route path="/matchgame" component={MatchGame}/>
 
-                    {/* Sign-Up*/}
-                    <Route path="/signUp" component={SignUp}/>
+                        {/* Sign-Up*/}
+                        <Route path="/signUp" component={SignUp}/>
 
-                    {/*Chat */}
-                    <Route path="/api/chat/:id" component={Chat}/>
+                        {/*Chat */}
+                        <Route path="/api/chat/:id" component={Chat}/>
 
-                    {/*Default route: Weggelassen... Syntax:<Route path="/" component={PostList}/>*/}
-                </Switch>
-            </div>
-        </Router>
-
+                        {/*Default route: Weggelassen... Syntax:<Route path="/" component={PostList}/>*/}
+                    </Switch>
+                </div>
+            </Router>
+        </I18nextProvider>
     </CookiesProvider>,
     document.getElementById('root'));

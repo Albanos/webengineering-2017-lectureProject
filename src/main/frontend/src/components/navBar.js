@@ -5,6 +5,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {stillOnlineCheck, logout} from "../util/Http";
+import {translate} from "react-i18next";
 
 class NavBar extends React.Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class NavBar extends React.Component {
 
         this.state = {
             loggedIn: undefined,
-            history:props.params.history
+            //history:props.params.history
         };
         window.updateNavbar = function () {
             this.setState({loggedIn: stillOnlineCheck()});
@@ -27,10 +28,11 @@ class NavBar extends React.Component {
         event.preventDefault();
         logout();
 
-        this.state.history.push('/user/login');
+        //this.state.history.push('/user/login');
     }
 
     render() {
+        const {t} = this.props;
         return (
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -38,17 +40,17 @@ class NavBar extends React.Component {
                         <a class="navbar-brand" href="#">fratcher</a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li><Link to="/user/actual">Actual User</Link></li>
-                        <li><Link to="/user/all">All Users</Link></li>
-                        <li><Link to="/matchgame">Matchgame</Link></li>
+                        <li><Link to="/user/actual">{t('actualUser')}</Link></li>
+                        <li><Link to="/matchgame">{t('matchGame')}</Link></li>
                         <li></li>
+
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {this.state.loggedIn  && <li><a>{this.state.loggedIn.email}</a></li> }
                         {this.state.loggedIn ?
-                            <li><a href onClick={this.handleLogout.bind(this)}>Logout</a></li>
+                            <li><a href onClick={this.handleLogout.bind(this)}>{t('logout')}</a></li>
                             :
-                            <li><Link to="/user/login">Login</Link></li>
+                            <li><Link to="/user/login">{t('login')}</Link></li>
                         }
                     </ul>
                 </div>
@@ -57,4 +59,4 @@ class NavBar extends React.Component {
     }
 }
 
-export default NavBar;
+export default translate()(NavBar);

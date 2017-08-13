@@ -1,0 +1,18 @@
+{
+  "emailAddress": "E-Mail Adresse",
+  "password": "Passwort",
+  "login": "Anmelden",
+  "logout": "Abmelden",
+  "loginNotSuccesful": "Anmeldung war nicht erfolgreich",
+  "loginSuccesful": "Anmeldung was erfolgreich",
+  "followI": "Folge ich",
+  "followMe": "Folgen mir",
+  "match": "Treffer",
+  "matchGame": "Treffer Spiel",
+  "like": "Gefällt mir",
+  "dislike": "Gefällt mir nicht",
+  "actualUser": "Aktueller Benutzer",
+  "signUp": "Konto anlegen",
+  "signUpIntro": "Bitte geben Sie Ihre E-Mail-Adresse, ein Passwort und Ihren spezifischen Text ein.",
+  "usertext": "Benutzer-Text"
+}

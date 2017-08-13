@@ -6,6 +6,7 @@ import React from "react";
 
 import {signUp} from "../util/Http";
 import User from "../util/User";
+import {translate} from "react-i18next";
 
 // A general counter component.
 class SignUp extends React.Component {
@@ -47,51 +48,65 @@ class SignUp extends React.Component {
     }
 
     render() {
-
+        const {t} = this.props;
         return (
-
-            <div className="component">
-                <h1>Sign up</h1>
-
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Please enter your E-Mail-Adress, a password and your specific Text to complete the registration.
-                        <br/>
-                        <br/>
-
-                        Email
-                        <input type="text" name="email" value={this.state.email} onChange={this.handleEmailChange}/>
-                    </label>
+                <div class="container">
+                    <h2>{t('signUp')}</h2>
                     <br/>
-                    <label>
-                        Password
-                        <input type="password" name="password" value={this.state.password}
-                               onChange={this.handlePasswordChange}/>
-                    </label>
+                    {t('signUpIntro')}
                     <br/>
-                    <label>
-                        Usertext:
-                        <input type="text" name="usertext" value={this.state.usertext}
-                               onChange={this.handleUserTextChange}/>
+                    <br/>
+                    <form onSubmit={this.handleSubmit.bind(this)}>
+                        <div class="form-group">
+                            <div>
+                                <label for="email">{t('emailAddress')}</label>
+                                <input type="text" class="form-control" id="email" value={this.state.email}
+                                       onChange={this.handleEmailChange}/>
+                                <br/>
+                            </div>
+                        </div>
 
-                    </label>
-                    <input type="submit" value="Submit"/>
-                </form>
+                        <div class="form-group center">
+                            <div>
+                                <label for="pwd">{t('password')}</label>
+                                <input type="password" class="form-control" id="pwd" value={this.state.password}
+                                       onChange={this.handlePasswordChange}/>
+                                <br/>
+                            </div>
+                        </div>
+                        <div class="form-group center">
+                            <div>
+                                <label for="pwd">{t('usertext')}</label>
+                                <input type="text" class="form-control" value={this.state.usertext}
+                                       onChange={this.handleUserTextChange}/>
+                                <br/>
+                                <button type="submit" class="btn btn-default">{t('login')}</button>
 
-                { this.state.error == true &&
-                <div className="error">
-                    Sign up was not successful.
+                                <br/>
+                                <br/>
+
+                                { this.state.error == true &&
+                                <div class="alert alert-danger col-xs-8">
+                                    {t('loginNotSuccesful')}
+                                </div>
+                                }
+
+                                {this.state.error == false &&
+                                <div class="alert alert-success col-xs-8">
+                                    {t('loginSuccesful')}
+                                </div>
+                                }
+
+                            </div>
+                        </div>
+
+                        <br/>
+                    </form>
+
                 </div>
-                }
 
-                {this.state.error == false &&
-                <div className="succesful">
-                    Sign up was successful.
-                </div>
-                }
-            </div>
         )
     }
 }
 
-export default SignUp;
+export default translate() (SignUp);

@@ -29,3 +29,9 @@
      text-decoration: none;
      color: blue;
 }
+
+.well{
+    width: 400px;
+    margin: auto;
+    word-break:break-all;
+}

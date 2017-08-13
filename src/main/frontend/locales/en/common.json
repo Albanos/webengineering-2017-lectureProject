@@ -1,0 +1,18 @@
+{
+  "emailAddress": "E-Mail Adress",
+  "password": "Password",
+  "login": "Login",
+  "logout": "Logout",
+  "loginNotSuccesful": "Login was not succesful",
+  "loginSuccesful": "Login was succesful",
+  "followI": "Follow I",
+  "followMe": "Follow me",
+  "match": "Match",
+  "matchGame": "Match Game",
+  "like": "Like",
+  "dislike": "Dislike",
+  "actualUser": "Actual User",
+  "signUp": "Create Account",
+  "signUpIntro": "Please enter your E-Mail-Adress, a password and your specific Text to complete the registration.",
+  "usertext": "Usertext"
+}

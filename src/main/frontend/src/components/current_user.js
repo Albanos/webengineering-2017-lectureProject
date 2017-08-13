@@ -7,6 +7,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 import {getActualUser} from '../util/Http';
+import {translate} from "react-i18next";
+import i18n from "../i18n";
 
 class CurrentUser extends React.Component {
     constructor(props) {
@@ -17,6 +19,8 @@ class CurrentUser extends React.Component {
             followI: [],
             followMe: []
         };
+
+        //i18n.changeLanguage("en");
     }
 
     // This function is called before render() to initialize its state.
@@ -36,7 +40,7 @@ class CurrentUser extends React.Component {
         return this.state.matches.map((userEntry => {
             return (
                 <li key={userEntry.id}>
-                  <Link to={'/api/chat/'+userEntry.id} > {userEntry.email} </Link>
+                    <Link to={'/api/chat/' + userEntry.id}> {userEntry.email} </Link>
                 </li>
             );
         }));
@@ -64,29 +68,54 @@ class CurrentUser extends React.Component {
 
 
     render() {
+        const {t} = this.props;
         return (
-            <div className="component">
-                <h1>Actual logged-In-User</h1>
-                <ul>
-                    <li>Name: {this.state.user.userName}</li>
-                    <li>Usertext: {this.state.user.userText}</li>
-                    <li>I follow:</li>
-                    <ul>
-                        {this.renderFollowI()}
-                    </ul>
-                    <li>Follow Me:</li>
-                    <ul>
-                        {this.renderFollowMe()}
-                    </ul>
-                    <li>Matches:</li>
-                    <ul>
-                        {this.renderUserMatches()}
-                    </ul>
-                </ul>
+            <div class="container">
+                <h2>{t('actualUser')}</h2>
+                <br/>
+                <h2>{this.state.user.userName}</h2>
+                <h4><i>{this.state.user.userText}</i></h4>
+                <br/>
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                    {t('followI')}</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">{this.renderFollowI()}</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                    {t('followMe')}</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body">{this.renderFollowMe()}</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                    {t('match')}</a>
+                            </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            <div class="panel-body">{this.renderUserMatches()}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         );
     }
 }
 
 
-export default CurrentUser;
+export default translate() (CurrentUser);

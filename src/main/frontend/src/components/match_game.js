@@ -6,6 +6,8 @@
 import React from "react";
 
 import {getNextUnreadUsertext, likeUsertext} from "../util/Http";
+import {translate} from "react-i18next";
+import i18n from "../i18n";
 
 class MatchGame extends React.Component {
     constructor(props) {
@@ -16,6 +18,8 @@ class MatchGame extends React.Component {
         };
 
         this.handleLike = this.handleLike.bind(this);
+
+        //i18n.changeLanguage("en");
     }
 
     // This function is called before render() to initialize its state.
@@ -42,17 +46,22 @@ class MatchGame extends React.Component {
     }
 
     render() {
+        const {t} = this.props;
         return (
-            <div className="component">
-                <h1>Match-Game</h1>
-                {this.state.text}
+            <div class="container">
+                <h2>{t('matchGame')}</h2>
                 <br/>
-                <span onClick={this.handleLike}>Like</span>
-                <br/>
-                <span onClick={this.handleDislike.bind(this)}>Dislike</span>
+                <div class="text-center">
+                    <div class="well">
+                        <i>{this.state.text}</i>
+                    </div>
+                    <button type="button" class="btn btn-success btn-lg" onClick={this.handleLike}>{t('like')}</button>&emsp;&emsp;
+                    <button type="button" class="btn btn-danger btn-lg" onClick={this.handleDislike.bind(this)}>{t('dislike')}</button>
+                </div>
             </div>
+
         );
     }
 }
 
-export default MatchGame;
+export default translate()(MatchGame);
