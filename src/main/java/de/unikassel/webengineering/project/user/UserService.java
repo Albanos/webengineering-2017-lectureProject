@@ -121,7 +121,11 @@ public class UserService {
         User meExact = userRepository.findOne(me.getId());
 
 
-
+        //Nur ein angemeldeter User kann liken oder disliken
+        //Wird der User nicht gefunden (evtl nicht angemeldet): gebe null zurück
+        if(meExact == null){
+            return null;
+        }
         List<Long> followI = meExact.getFollowI().stream().map(User::getId).collect(Collectors.toList());
         followI.add(me.getId());
 

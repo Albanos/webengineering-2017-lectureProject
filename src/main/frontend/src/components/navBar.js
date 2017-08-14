@@ -37,7 +37,7 @@ class NavBar extends React.Component {
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">fratcher</a>
+                        <a class="navbar-brand" href="#/user/actual">fratcher</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <li><Link to="/user/actual">{t('actualUser')}</Link></li>

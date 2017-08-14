@@ -63,7 +63,7 @@ public class AuthenticationController {
     public ResponseEntity<UserResponse> getActualLoggedInUser(){
         UserResponse userResponse = service.getActualLoggedInUser();
         if(userResponse == null){
-            return new ResponseEntity<UserResponse>(userResponse, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<UserResponse>(userResponse, HttpStatus.NOT_FOUND);
         }
         else{
             return new ResponseEntity<UserResponse>(userResponse, HttpStatus.OK);

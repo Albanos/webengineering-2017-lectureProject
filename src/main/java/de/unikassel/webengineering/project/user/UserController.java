@@ -58,12 +58,19 @@ public class UserController {
     }
 
     @RequestMapping(value = "/api/user/nextUnread", method = RequestMethod.GET)
-    public User getNextUnreadUser(){
+    public ResponseEntity<User> getNextUnreadUser(){
         LOG.info("Get a User, that not read text");
 
         User user = userService.getNextUnreadUser();
 
-        return user;
+
+        //Nur angemeldete User dürfen liken oder disliken. Ist der user null, wurde er nicht in der DB gefunden.
+        //Vermutlich ist er nicht angemeldet, deshalb: unauthorized
+        if(user==null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/api/user/like", method = RequestMethod.POST)
