@@ -28,6 +28,7 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: 'assets/**/*'},
             {from: 'locales/**/*'},
+            {from: 'fonts/**/*'},
             {from: 'index.html'}
         ])
     ],

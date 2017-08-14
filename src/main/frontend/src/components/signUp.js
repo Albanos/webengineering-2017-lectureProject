@@ -7,6 +7,7 @@ import React from "react";
 import {signUp} from "../util/Http";
 import User from "../util/User";
 import {translate} from "react-i18next";
+import {withRouter} from "react-router-dom";
 
 // A general counter component.
 class SignUp extends React.Component {
@@ -17,7 +18,8 @@ class SignUp extends React.Component {
             email: '',
             password: '',
             usertext: '',
-            error: undefined
+            error: undefined,
+            history:props.history
         };
 
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -43,8 +45,13 @@ class SignUp extends React.Component {
         event.preventDefault();
 
         signUp(this.state.email, this.state.password, this.state.usertext)
-            .then(() => this.setState({error: false}))
+            .then(() =>{
+                this.setState({error: false})
+                this.state.history.push('/user/actual');
+            })
             .catch(() => this.setState({error: true}));
+
+
     }
 
     render() {
@@ -109,4 +116,4 @@ class SignUp extends React.Component {
     }
 }
 
-export default translate() (SignUp);
+export default withRouter(translate()(SignUp));

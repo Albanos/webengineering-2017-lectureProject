@@ -3,9 +3,10 @@
  */
 
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import {stillOnlineCheck, logout} from "../util/Http";
 import {translate} from "react-i18next";
+import i18n from "../i18n";
 
 class NavBar extends React.Component {
     constructor(props) {
@@ -13,7 +14,7 @@ class NavBar extends React.Component {
 
         this.state = {
             loggedIn: undefined,
-            //history:props.params.history
+            history:props.history
         };
         window.updateNavbar = function () {
             this.setState({loggedIn: stillOnlineCheck()});
@@ -28,7 +29,16 @@ class NavBar extends React.Component {
         event.preventDefault();
         logout();
 
-        //this.state.history.push('/user/login');
+        this.state.history.push('/user/login');
+    }
+
+    handleLanguage(event) {
+        if (event.target.outerText == "DE") {
+            i18n.changeLanguage("de");
+        }
+        else if (event.target.outerText == "EN") {
+            i18n.changeLanguage("en");
+        }
     }
 
     render() {
@@ -39,12 +49,12 @@ class NavBar extends React.Component {
                     <div class="navbar-header">
                         <a class="navbar-brand" href="#/user/actual">fratcher</a>
                     </div>
+                    {this.state.loggedIn &&
                     <ul class="nav navbar-nav">
                         <li><Link to="/user/actual">{t('actualUser')}</Link></li>
                         <li><Link to="/matchgame">{t('matchGame')}</Link></li>
-                        <li></li>
-
                     </ul>
+                    }
                     <ul class="nav navbar-nav navbar-right">
                         {this.state.loggedIn  && <li><a>{this.state.loggedIn.email}</a></li> }
                         {this.state.loggedIn ?
@@ -54,9 +64,15 @@ class NavBar extends React.Component {
                         }
                     </ul>
                 </div>
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="pointer" onClick={this.handleLanguage}>DE</a></li>
+                        <li><a class="pointer" onClick={this.handleLanguage}>EN</a></li>
+                    </ul>
+                </div>
             </nav>
         );
     }
 }
 
-export default translate()(NavBar);
+export default withRouter(translate()(NavBar));

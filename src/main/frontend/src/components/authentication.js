@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {HashRouter as Router, Route, Link} from 'react-router-dom';
+import {HashRouter as Router, Route, Link, withRouter} from 'react-router-dom';
 
 import User from "../util/User";
 import {translate} from "react-i18next";
@@ -18,18 +18,15 @@ class Authentication extends React.Component {
             email: '',
             password: '',
             error: undefined,
-            lang: 'en'
+            lang: 'en',
+            history:props.history
         };
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
 
-        //i18n.changeLanguage("de");
-    }
 
-    componentWillMount() {
-        //i18n.changeLanguage("en");
     }
 
     handleLogout() {
@@ -50,20 +47,9 @@ class Authentication extends React.Component {
         login(this.state.email, this.state.password)
             .then(() => {
                 this.setState({error: false});
+                this.state.history.push('/user/actual');
             })
             .catch(() => this.setState({error: true}));
-    }
-
-    handleLanguage(event) {
-        //event.preventDefault();
-        if (event.target.outerText == "Deutsch") {
-            i18n.changeLanguage("de");
-        }
-        else if (event.target.outerText == "Englisch") {
-            i18n.changeLanguage("en");
-        }
-
-        //this.forceUpdate();
     }
 
     //Wir packen den Teil, der konditional gerendert werden soll in eine separate variable. Gleiche Funktionalität
@@ -141,10 +127,6 @@ class Authentication extends React.Component {
                                     {t('loginNotSuccesful')}
                                 </div>
                                 }
-
-                                <span onClick={this.handleLanguage}>Deutsch</span>
-                                <br/>
-                                <span onClick={this.handleLanguage}>Englisch</span>
                             </div>
                         </div>
                         <br/>
@@ -156,4 +138,4 @@ class Authentication extends React.Component {
     }
 }
 
-export default translate()(Authentication);
+export default withRouter(translate()(Authentication));

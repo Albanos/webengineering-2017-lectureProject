@@ -55,8 +55,8 @@ class MatchGame extends React.Component {
                     <div class="well">
                         <i>{this.state.text}</i>
                     </div>
-                    <button type="button" class="btn btn-success btn-lg" onClick={this.handleLike}>{t('like')}</button>&emsp;&emsp;
-                    <button type="button" class="btn btn-danger btn-lg" onClick={this.handleDislike.bind(this)}>{t('dislike')}</button>
+                    <button type="button" class="btn btn-success btn-lg" onClick={this.handleLike}><span class="glyphicon glyphicon-thumbs-up"/> {t('like')}</button>&emsp;&emsp;
+                    <button type="button" class="btn btn-danger btn-lg" onClick={this.handleDislike.bind(this)}><span class="glyphicon glyphicon-thumbs-down"/> {t('dislike')}</button>
                 </div>
             </div>
 

@@ -35,3 +35,9 @@
     margin: auto;
     word-break:break-all;
 }
+
+nav .container-fluid:nth-child(2) .navbar-nav > li > a{
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: smaller;
+}
