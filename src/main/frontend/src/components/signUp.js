@@ -116,4 +116,4 @@ class SignUp extends React.Component {
     }
 }
 
-export default withRouter(translate()(SignUp));
+export default withRouter(translate()(SignUp)) ;
