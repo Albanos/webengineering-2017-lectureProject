@@ -17,6 +17,7 @@ public class UserResponse {
     private HashSet<User> followI= new HashSet<>();
     private HashSet<User> followMe = new HashSet<>();
     private HashSet<User> matches = new HashSet<>();
+    private HashSet<User> dislike = new HashSet<>();
 
     public UserResponse(User user){
         id= user.getId();
@@ -25,6 +26,8 @@ public class UserResponse {
 
         followI.addAll(user.getFollowI());
         followMe.addAll(user.getFollowMe());
+
+        dislike.addAll(user.getDislike());
 
         matches.addAll(followI.stream().filter(u -> followMe.contains(u)).collect(Collectors.toList()));
     }
@@ -51,5 +54,13 @@ public class UserResponse {
 
     public HashSet<User> getMatches() {
         return matches;
+    }
+
+    public HashSet<User> getDislike() {
+        return dislike;
+    }
+
+    public void setDislike(HashSet<User> dislike) {
+        this.dislike = dislike;
     }
 }

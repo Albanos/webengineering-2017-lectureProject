@@ -47,6 +47,9 @@ public class User {
             inverseJoinColumns={@JoinColumn(name="LikeTo")})
     private Set<User> followI = new HashSet<User>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<User> dislike = new HashSet<>();
+
 
     public Long getId() {
         return id;
@@ -99,4 +102,12 @@ public class User {
         this.followI = followI;
     }
 
+    @JsonIgnore
+    public Set<User> getDislike() {
+        return dislike;
+    }
+
+    public void setDislike(Set<User> dislike) {
+        this.dislike = dislike;
+    }
 }

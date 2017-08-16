@@ -127,13 +127,14 @@ public class UserService {
             return null;
         }
         List<Long> followI = meExact.getFollowI().stream().map(User::getId).collect(Collectors.toList());
+        List<Long> dislikeI = meExact.getDislike().stream().map(User::getId).collect(Collectors.toList());
         followI.add(me.getId());
 
 
         //User oneByIdNotIn = userRepository.findFirstByIdNotIn(followI);
         //User oneByIdNotIn = userRepository.findOneByIdNotIn(followI);
         //User oneByIdNotIn = userRepository.findLastByIdNotIn(followI);
-        List<User> usersIdNotIn = userRepository.findAllByIdNotIn(followI);
+        List<User> usersIdNotIn = userRepository.findAllByIdNotInAndNotIn(followI, dislikeI);
 
         Random randomizer = new Random();
         User random = usersIdNotIn.get(randomizer.nextInt(usersIdNotIn.size()));
@@ -152,6 +153,17 @@ public class UserService {
         User userThatILike = userRepository.findOne(id);
 
         meExact.getFollowI().add(userThatILike);
+
+        userRepository.save(meExact);
+    }
+
+    public void dislikeTextOfUserWithID(Long id){
+        User me = getCurrentUser();
+        User meExact = userRepository.findOne(me.getId());
+
+        User userThatIDislike = userRepository.findOne(id);
+
+        meExact.getDislike().add(userThatIDislike);
 
         userRepository.save(meExact);
     }

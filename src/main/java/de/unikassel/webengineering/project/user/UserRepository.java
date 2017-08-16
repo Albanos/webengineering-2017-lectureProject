@@ -24,7 +24,9 @@ public interface UserRepository extends CrudRepository<User,Long> {
     //@OrderBy(clause = "rand()")
     //User findFirstByIdNotIn(List<Long> followI);
     //User getOneByIdNotIn(List<Long> followI);
-    List<User> findAllByIdNotIn(List<Long> followI);
+
+    @Query(value = "SELECT u FROM User_ u WHERE u.id NOT IN (:followI, :dislike)")
+    List<User> findAllByIdNotInAndNotIn(@Param("followI") List<Long> followI, @Param("dislike") List<Long> dislike);
     //User findOneByIdNotIn(List<Long> followI);
     //User findLastByIdNotIn(List<Long> followI);
 

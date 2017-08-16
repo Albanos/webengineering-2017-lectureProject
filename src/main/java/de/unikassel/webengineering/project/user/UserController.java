@@ -78,4 +78,9 @@ public class UserController {
 
         userService.likeTextOfUserWithID(user.getId());
     }
+
+    @RequestMapping(value="/api/user/dislike", method = RequestMethod.POST)
+    public void dislikeTextOfUserWithID(@RequestBody User user){
+        userService.dislikeTextOfUserWithID(user.getId());
+    }
 }
