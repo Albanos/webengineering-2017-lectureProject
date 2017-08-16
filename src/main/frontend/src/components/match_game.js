@@ -5,7 +5,7 @@
 
 import React from "react";
 
-import {getNextUnreadUsertext, likeUsertext} from "../util/Http";
+import {getNextUnreadUsertext, likeUsertext, dislikeUsertext} from "../util/Http";
 import {translate} from "react-i18next";
 import i18n from "../i18n";
 
@@ -42,7 +42,13 @@ class MatchGame extends React.Component {
 
     handleDislike(event) {
         event.preventDefault();
-        this.componentWillMount();
+
+        dislikeUsertext(this.state.id)
+            .then(() => {
+                this.componentWillMount();
+            });
+
+
     }
 
     render() {

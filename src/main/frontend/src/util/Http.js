@@ -30,7 +30,7 @@ axios.interceptors.response.use(undefined, (error) => {
 
 
 //Export von allen folgenden Methoden:
-export {getActualUser, getAllUsers, getNextUnreadUsertext, likeUsertext, stillOnlineCheck, login, logout, signUp, getUserByID,
+export {getActualUser, getAllUsers, getNextUnreadUsertext, likeUsertext, dislikeUsertext, stillOnlineCheck, login, logout, signUp, getUserByID,
 sendChatMessage, getUnreadMessages};
 
 function getUnreadMessages(partnerID){
@@ -66,6 +66,12 @@ function getNextUnreadUsertext() {
 function likeUsertext(id) {
     return axios.post('/api/user/like', {
         id: id
+    });
+}
+
+function dislikeUsertext(id){
+    return axios.post('/api/user/dislike', {
+        id:id
     });
 }
 

@@ -134,7 +134,7 @@ public class UserService {
         //User oneByIdNotIn = userRepository.findFirstByIdNotIn(followI);
         //User oneByIdNotIn = userRepository.findOneByIdNotIn(followI);
         //User oneByIdNotIn = userRepository.findLastByIdNotIn(followI);
-        List<User> usersIdNotIn = userRepository.findAllByIdNotInAndNotIn(followI, dislikeI);
+        List<User> usersIdNotIn = userRepository.findAllByIdNotIn(followI, dislikeI);
 
         Random randomizer = new Random();
         User random = usersIdNotIn.get(randomizer.nextInt(usersIdNotIn.size()));
