@@ -67,7 +67,7 @@ public class UserController {
         //Nur angemeldete User dürfen liken oder disliken. Ist der user null, wurde er nicht in der DB gefunden.
         //Vermutlich ist er nicht angemeldet, deshalb: unauthorized
         if(user==null){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<User>(user, HttpStatus.OK);

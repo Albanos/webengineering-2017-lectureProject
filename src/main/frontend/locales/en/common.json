@@ -14,5 +14,7 @@
   "actualUser": "Actual User",
   "signUp": "Create Account",
   "signUpIntro": "Please enter your E-Mail-Adress, a password and your specific Text to complete the registration.",
-  "usertext": "Usertext"
+  "usertext": "Usertext",
+  "error": "Error",
+  "aLittleProblem": "Oops, there is a little problem... Do you like or dislike anything?"
 }

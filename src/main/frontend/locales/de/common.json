@@ -14,5 +14,7 @@
   "actualUser": "Aktueller Benutzer",
   "signUp": "Konto anlegen",
   "signUpIntro": "Bitte geben Sie Ihre E-Mail-Adresse, ein Passwort und Ihren spezifischen Text ein.",
-  "usertext": "Benutzer-Text"
+  "usertext": "Benutzer-Text",
+  "error": "Fehler",
+  "aLittleProblem": "Oops, da ist ein kleiner Problem aufgetreten... Hast du vielleicht schon alle gelikt oder dislikt?"
 }

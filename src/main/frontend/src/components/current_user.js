@@ -4,7 +4,7 @@
 
 
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 import {getActualUser} from '../util/Http';
 import {translate} from "react-i18next";
@@ -17,7 +17,8 @@ class CurrentUser extends React.Component {
             user: {},
             matches: [],
             followI: [],
-            followMe: []
+            followMe: [],
+            history:props.history
         };
 
         //i18n.changeLanguage("en");
@@ -33,6 +34,9 @@ class CurrentUser extends React.Component {
                     followI: data.followI,
                     followMe: data.followMe
                 });
+            })
+            .catch(() => {
+                this.state.history.push('/user/login');
             });
     }
 
@@ -118,4 +122,4 @@ class CurrentUser extends React.Component {
 }
 
 
-export default translate() (CurrentUser);
+export default withRouter(translate() (CurrentUser));

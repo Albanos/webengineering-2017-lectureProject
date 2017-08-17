@@ -4,8 +4,9 @@
 
 
 import React from "react";
+import {withRouter} from 'react-router-dom';
 
-import {getNextUnreadUsertext, likeUsertext, dislikeUsertext} from "../util/Http";
+import {getNextUnreadUsertext, likeUsertext, dislikeUsertext, getActualUser} from "../util/Http";
 import {translate} from "react-i18next";
 import i18n from "../i18n";
 
@@ -14,7 +15,9 @@ class MatchGame extends React.Component {
         super(props);
         this.state = {
             text: [],
-            id: undefined
+            id: undefined,
+            error: false,
+            history:props.history
         };
 
         this.handleLike = this.handleLike.bind(this);
@@ -28,8 +31,18 @@ class MatchGame extends React.Component {
             .then((response) => {
                 this.setState({
                     text: response.data.usertext,
-                    id: response.data.id
+                    id: response.data.id,
+                    error: false
                 });
+            })
+            .catch(() => {
+                getActualUser()
+                    .catch(() => {
+                        this.state.history.push('/user/actual');
+                    });
+
+                this.setState({error: true});
+
             });
     }
 
@@ -40,8 +53,8 @@ class MatchGame extends React.Component {
             });
     }
 
-    handleDislike(event) {
-        event.preventDefault();
+    handleDislike() {
+        //event.preventDefault();
 
         dislikeUsertext(this.state.id)
             .then(() => {
@@ -64,10 +77,17 @@ class MatchGame extends React.Component {
                     <button type="button" class="btn btn-success btn-lg" onClick={this.handleLike}><span class="glyphicon glyphicon-thumbs-up"/> {t('like')}</button>&emsp;&emsp;
                     <button type="button" class="btn btn-danger btn-lg" onClick={this.handleDislike.bind(this)}><span class="glyphicon glyphicon-thumbs-down"/> {t('dislike')}</button>
                 </div>
+                <br/>
+
+                {this.state.error == true &&
+                <div class="alert alert-danger">
+                    <strong>{t('aLittleProblem')}</strong>
+                </div>
+                }
             </div>
 
         );
     }
 }
 
-export default translate()(MatchGame);
+export default withRouter(translate()(MatchGame));
