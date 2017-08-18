@@ -29,6 +29,6 @@ Im Chat-Bereich ist als erste Nachricht der Usertext des Partners zu sehen. Die 
 
 Über die Navigations-leiste ist auch das Treffer-Spiel erreichbar. Dort können Texte, die von einem User noch nicht kategorisiert wurden (like oder dislike) angesehen und bewertet werden. Je nach Entscheidung werden die Texte dem Benutzer zugeordnet: gelikte wie auch nicht gelikte texte werden in Listen des Users abgelegt und danach nicht mehr im Treffer-Spiel angezeigt.
 
-##Fehlerbehandlung
+## Fehlerbehandlung
 Ist der Login-vorgang oder die Konto-einrichtung nicht möglich, erscheinen entsprechende Alarm-banner auf dem Bildschirm (natürlich immer in der jeweills gesetzten Sprache). Werden beim Treffer-spiel alle Benutzertexte "aufgebraucht" (weil alle Texte von einem User bereits bewertet wurden) erscheint ebenfalls ein entsprechendes Alarm-Fenster auf dem Bildschirm mit einem entsprechenden Hinweis.
 Sollte der User versuchen über die URL aus seinem Browser-verlauf zu einer bestimmten Seite zu springen, ohne dabei angemeldet zu sein, wird er automatisch an den Login-bereich weitergeleitet, wo ein login oder eben eine Konto-Anlegung möcglich ist.
