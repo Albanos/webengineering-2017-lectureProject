@@ -1,7 +1,7 @@
-#Überblick
+# Überblick
 Dies ist das Repository der Projektaufgabe, welche im Rahmen der Veranstaltung Webengineering entwickelt wurde.
 
-##Installation des Projektes
+## Installation des Projektes
 Das Projekt wurde mit Maven entwickelt. Demzufolge ist nach dem Checkout aus diesem repository der Download und die Integration der genutzten Dependencys mit folgendem Befehl möglich:
 ```
 mvn instll clean
@@ -18,7 +18,7 @@ Nach dem Ausführen dieses Befehls ist der Login-screen der Anwendung über das 
 http://localhost:8080/#/user/login
 ```
 
-##Nutzung der Anwendung über das Frontend
+## Nutzung der Anwendung über das Frontend
 Nachdem das Frontend über die obige URL gestartet wurde, muss zunächst ein Login erfolgen. Bereits während des Login-Vorgangs ist im Kopf der Anwendung eine Navigations-leiste zu sehen, über die bereits jetzt die Sprache eingestellt werden kann (DE = Deutsch, EN = Englisch). 
 
 Existiert noch kein eigener Account, kann dieser über den Login-Bildschirm durchgeführt werden (oben rechts). Nach dem Klick erscheint ein Formular, in welcher die Mail-Adresse, ein Passwort und der spezifische User-text verlangt wird. Nach dem ausfüllen des Formular kann der User sich über einen klick auf den Button ein Konto einrichten und sich direkt anmelden.
