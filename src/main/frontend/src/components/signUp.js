@@ -87,7 +87,7 @@ class SignUp extends React.Component {
                                 <input type="text" class="form-control" value={this.state.usertext}
                                        onChange={this.handleUserTextChange}/>
                                 <br/>
-                                <button type="submit" class="btn btn-default">{t('login')}</button>
+                                <button type="submit" class="btn btn-default">{t('SignUpAndLogin')}</button>
 
                                 <br/>
                                 <br/>

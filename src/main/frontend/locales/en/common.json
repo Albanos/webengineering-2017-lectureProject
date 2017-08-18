@@ -16,5 +16,6 @@
   "signUpIntro": "Please enter your E-Mail-Adress, a password and your specific Text to complete the registration.",
   "usertext": "Usertext",
   "error": "Error",
-  "aLittleProblem": "Oops, there is a little problem... Do you like or dislike anything?"
+  "aLittleProblem": "Oops, there is a little problem... Do you like or dislike anything?",
+  "SignUpAndLogin": "Sign up and login"
 }

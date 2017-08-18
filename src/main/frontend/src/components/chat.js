@@ -18,13 +18,16 @@ class Chat extends Component {
             messages:[],
             chatPartner: undefined,
             myMessage:'',
-            interval:undefined
+            interval:undefined,
+            newMessage: undefined
         };
+
     }
 
     //left=messages von mir
     //rigt=messages des partners
     componentWillMount(){
+        let component = null;
         getUserByID(this.state.id)
             .then(response => {
                 this.setState({
@@ -44,6 +47,11 @@ class Chat extends Component {
                         array.push({side:'right', text:message.message});
                     });
                     this.setState({messages:array});
+
+                    //if(!(this.props.match.url.substring(0,8) == '/api/chat')){
+                      //  console.log("new Message");
+                        //this.setState({newMessage: true});
+                    //}
                 });
         }, 5000);
 
@@ -53,6 +61,7 @@ class Chat extends Component {
     //Wenn die Komponente verlassen wird: resete den interval
     componentWillUnmount(){
         clearInterval(this.state.interval);
+
     }
 
     handleChangeMessageField(event){
@@ -66,6 +75,7 @@ class Chat extends Component {
                 let array = this.state.messages;
                 array.push({side:'left', text:this.state.myMessage});
                 this.setState({messages:array});
+                this.setState({myMessage: ''});
             });
     }
 
@@ -87,7 +97,7 @@ class Chat extends Component {
                             </li>;
                         })}
                     </ul>
-                    <div class="bottom_wrapper clearfix">
+                    <div class="bottom_wrapper clearfix" onKeyPress={(e) => {if(e.keyCode == 13){console.log("HI")}}}>
                         <div class="message_input_wrapper">
                             <input class="message_input" value={this.state.myMessage}
                                                                   onChange={this.handleChangeMessageField.bind(this)}
@@ -97,9 +107,11 @@ class Chat extends Component {
                             <div class="icon"></div>
                             <div class="text">Send</div>
                         </div>
+
                     </div>
                 </div>
             </div>
+
         );
     }
 }

@@ -16,5 +16,6 @@
   "signUpIntro": "Bitte geben Sie Ihre E-Mail-Adresse, ein Passwort und Ihren spezifischen Text ein.",
   "usertext": "Benutzer-Text",
   "error": "Fehler",
-  "aLittleProblem": "Oops, da ist ein kleiner Problem aufgetreten... Hast du vielleicht schon alle gelikt oder dislikt?"
+  "aLittleProblem": "Oops, da ist ein kleiner Problem aufgetreten... Hast du vielleicht schon alle gelikt oder dislikt?",
+  "SignUpAndLogin": "Konto erstellen und anmelden"
 }
