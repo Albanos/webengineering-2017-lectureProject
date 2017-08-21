@@ -17,5 +17,6 @@
   "usertext": "Benutzer-Text",
   "error": "Fehler",
   "aLittleProblem": "Oops, da ist ein kleiner Problem aufgetreten... Hast du vielleicht schon alle gelikt oder dislikt?",
-  "SignUpAndLogin": "Konto erstellen und anmelden"
+  "SignUpAndLogin": "Konto erstellen und anmelden",
+  "newMessageFrom": "Neue Nachricht von"
 }

@@ -5,6 +5,7 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 
+import {translate} from "react-i18next";
 import {getUserByID, sendChatMessage, getUnreadMessages, login, stillOnlineCheck} from '../util/Http';
 import User from '../util/User';
 
@@ -87,12 +88,13 @@ class NewMessagePopUp extends Component {
 
 
     render() {
+        const {t} = this.props;
         return (
             <div class="myPopUp">
                 {this.state.newMessage &&
                 <div class="alert alert-info">
-                    <a class="close" onClick={this.handleClose.bind(this)}>&times;</a>
-                    Neue Nachricht von {this.state.newMessage}
+                    <a class="close" onClick={this.handleClose.bind(this)}>&emsp;&times;</a>
+                    {t('newMessageFrom')} {this.state.newMessage}
                 </div>
                 }
             </div>
@@ -100,4 +102,4 @@ class NewMessagePopUp extends Component {
     }
 }
 
-export default withRouter(NewMessagePopUp);
+export default withRouter(translate()(NewMessagePopUp));

@@ -17,5 +17,6 @@
   "usertext": "Usertext",
   "error": "Error",
   "aLittleProblem": "Oops, there is a little problem... Do you like or dislike anything?",
-  "SignUpAndLogin": "Sign up and login"
+  "SignUpAndLogin": "Sign up and login",
+  "newMessageFrom": "New Message from"
 }
