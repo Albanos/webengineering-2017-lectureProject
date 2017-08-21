@@ -6,7 +6,9 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Luan Hajzeraj on 29.06.2017.
@@ -55,12 +57,31 @@ public class User {
         return id;
     }
 
+    public List<User> createMatchList(){
+        return followI.stream().filter(u -> followMe.contains(u)).collect(Collectors.toList());
+    }
+
+    public boolean validateMatch(User userToCheck){
+        List<User> matchList = createMatchList();
+
+        for(User u : matchList){
+            if(u.getId().equals(userToCheck.getId())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public String getNickname(){
+        return email.split("@")[0];
     }
 
     public void setEmail(String email) {

@@ -41,3 +41,11 @@ nav .container-fluid:nth-child(2) .navbar-nav > li > a{
     padding-bottom: 0;
     font-size: smaller;
 }
+
+.myPopUp {
+    width: 200px;
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 99999;
+}

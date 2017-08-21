@@ -21,7 +21,7 @@ public class UserResponse {
 
     public UserResponse(User user){
         id= user.getId();
-        userName= user.getEmail();
+        userName= user.getNickname();
         userText = user.getUsertext();
 
         followI.addAll(user.getFollowI());
@@ -29,7 +29,7 @@ public class UserResponse {
 
         dislike.addAll(user.getDislike());
 
-        matches.addAll(followI.stream().filter(u -> followMe.contains(u)).collect(Collectors.toList()));
+        matches.addAll(user.createMatchList());
     }
 
     public Long getId() {

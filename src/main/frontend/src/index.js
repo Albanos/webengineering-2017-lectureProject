@@ -107,7 +107,6 @@ import {HashRouter as Router, Link, Route, Switch} from "react-router-dom";
 import {history} from "react-router";
 
 import Authentication from "./components/authentication";
-import UserList from "./components/user_list";
 import CurrentUser from "./components/current_user";
 import MatchGame from "./components/match_game";
 import SignUp from "./components/signUp";
@@ -115,6 +114,7 @@ import NavBar from "./components/navBar";
 import Chat from "./components/chat"
 import i18n from "./i18n";
 import User from "./util/User"
+import NewMessagePopUp from "./components/newMessagePopUp"
 
 
 ReactDOM.render(
@@ -125,15 +125,14 @@ ReactDOM.render(
                 <div>
                     <NavBar/>
 
+                    <NewMessagePopUp/>
+
                     <Switch>
                         {/*Authentication*/}
                         <Route path="/user/login" component={Authentication}/>
 
                         {/*actual logged in user*/}
                         <Route path="/user/actual" component={CurrentUser}/>
-
-                        {/*List of all users*/}
-                        <Route path="/user/all" component={UserList}/>
 
                         {/*Matchgame*/}
                         <Route path="/matchgame" component={MatchGame}/>

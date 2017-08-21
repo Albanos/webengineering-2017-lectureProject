@@ -4,20 +4,20 @@
 
 class User {
     constructor() {
-        this.email = undefined;
+        this.nickname = undefined;
         this.id = -1;
     }
 
     isAuthenticated() {
-        return this.email && this.id != -1;
+        return this.nickname && this.id != -1;
     }
 
     isNotAuthenticated() {
         return !this.isAuthenticated();
     }
 
-    setUser(email, id){
-        this.email = email;
+    setUser(nickname, id){
+        this.nickname = nickname;
         this.id = id;
     }
 

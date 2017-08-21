@@ -42,23 +42,19 @@ public class MessageService {
         return messageRepository.findByToUser(user);
     }
 
-    public List<Message> getUnreadMessages(Long id) {
-        User me = userService.getCurrentUser();
-        User otherUser = userService.getUserByID(id);
+    public List<Message> getUnreadMessages(User me, User partner) {
 
-        if(otherUser==null){
-            return null;
-        }
-
-
-        List<Message> unreadMessages = messageRepository.findAllByAuthorAndToUserAndIsRead(otherUser, me, false);
+        List<Message> unreadMessages = messageRepository.findAllByAuthorAndToUserAndIsRead(partner, me, false);
 
         for(Message m : unreadMessages){
             m.setRead(true);
             messageRepository.save(m);
         }
 
-
         return unreadMessages;
+    }
+
+    public List<Message> getUnreadMessages(User me) {
+        return messageRepository.findAllByToUserAndIsRead(me, false);
     }
 }

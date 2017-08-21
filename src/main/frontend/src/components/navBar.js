@@ -56,7 +56,7 @@ class NavBar extends React.Component {
                     </ul>
                     }
                     <ul class="nav navbar-nav navbar-right">
-                        {this.state.loggedIn  && <li><a>{this.state.loggedIn.email}</a></li> }
+                        {this.state.loggedIn  && <li><a>{this.state.loggedIn.nickname}</a></li> }
                         {this.state.loggedIn ?
                             <li><a href onClick={this.handleLogout.bind(this)}>{t('logout')}</a></li>
                             :

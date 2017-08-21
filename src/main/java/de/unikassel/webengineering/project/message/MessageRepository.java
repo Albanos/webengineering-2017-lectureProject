@@ -17,4 +17,5 @@ public interface MessageRepository extends CrudRepository<Message, Long> {
     List<Message> findByToUser(@Param("toUser") User user );
     List<Message> findAll();
     List<Message> findAllByAuthorAndToUserAndIsRead(User author, User toUser, boolean isRead);
+    List<Message> findAllByToUserAndIsRead(User toUser, boolean isRead);
 }

@@ -42,7 +42,7 @@ class Messages extends React.Component {
         return this.state.from.map((userEntry => {
             return (
                 <li key={userEntry.id}>
-                    {userEntry.email}
+                    {userEntry.nickname}
                 </li>
             );
         }));

@@ -25,6 +25,7 @@ public class MessageController {
     @Autowired
     private UserService userService;
 
+
     @RequestMapping(value = "/api/message/newMessage", method = RequestMethod.POST)
     public ResponseEntity saveMessage(@RequestBody Message message){
         if(userService.isAnonymous()){
@@ -47,12 +48,37 @@ public class MessageController {
     }
 
     @RequestMapping(value = "/api/message/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<Message>> getUnreadMessages(@PathVariable Long id){
-        List<Message> unreadMessages = messageService.getUnreadMessages(id);
+    public ResponseEntity<List<Message>> getUnreadMessagesByID(@PathVariable Long id){
+        User me = userService.getCurrentUser();
 
-        if(unreadMessages == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if(me == null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
+        User meExact = userService.getUserByID(me.getId());
+        User partner = userService.getUserByID(id);
+
+
+        if(partner == null || !meExact.validateMatch(partner)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        List<Message> unreadMessages = messageService.getUnreadMessages(meExact,partner);
+
+        return new ResponseEntity<>(unreadMessages, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/message/", method = RequestMethod.GET)
+    public ResponseEntity<List<Message>> getUnreadMessages(){
+        User me = userService.getCurrentUser();
+
+        if(me == null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User meExact = userService.getUserByID(me.getId());
+
+        List<Message> unreadMessages = messageService.getUnreadMessages(meExact);
 
         return new ResponseEntity<>(unreadMessages, HttpStatus.OK);
     }

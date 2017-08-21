@@ -44,7 +44,7 @@ class CurrentUser extends React.Component {
         return this.state.matches.map((userEntry => {
             return (
                 <li key={userEntry.id}>
-                    <Link to={'/api/chat/' + userEntry.id}> {userEntry.email} </Link>
+                    <Link to={'/api/chat/' + userEntry.id}> {userEntry.nickname} </Link>
                 </li>
             );
         }));
@@ -54,7 +54,7 @@ class CurrentUser extends React.Component {
         return this.state.followI.map((userEntry => {
             return (
                 <li key={userEntry.id}>
-                    {userEntry.email}
+                    {userEntry.nickname}
                 </li>
             );
         }));
@@ -64,7 +64,7 @@ class CurrentUser extends React.Component {
         return this.state.followMe.map((userEntry => {
             return (
                 <li key={userEntry.id}>
-                    {userEntry.email}
+                    {userEntry.nickname}
                 </li>
             );
         }));

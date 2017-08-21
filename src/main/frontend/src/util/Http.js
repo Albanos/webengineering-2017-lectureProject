@@ -34,7 +34,7 @@ export {getActualUser, getAllUsers, getNextUnreadUsertext, likeUsertext, dislike
 sendChatMessage, getUnreadMessages};
 
 function getUnreadMessages(partnerID){
-    return axios.get('/api/message/'+partnerID);
+    return axios.get('/api/message/'+(partnerID ? partnerID : ''));
 }
 
 function sendChatMessage(author,toUser,message){
@@ -81,7 +81,7 @@ function stillOnlineCheck() {
     if (auth) {
         //TODO: Später vielleicht den Server nach gültig des tokens fragen
         axios.defaults.headers.common['Authorization'] = auth.token;
-        User.setUser(auth.user.email, auth.user.id);
+        User.setUser(auth.user.nickname, auth.user.id);
         return User;
     }
 }
@@ -95,6 +95,7 @@ function logout() {
     cookies.remove('auth');
 
     window.updateNavbar();
+    window.updateNewMessagePopUp();
 }
 
 function login(email, password) {
@@ -111,6 +112,9 @@ function login(email, password) {
         }, {path: '/'});
 
         window.updateNavbar();
+
+        //Listener für neue Nachrichten
+        window.updateNewMessagePopUp();
 
         return User;
     });

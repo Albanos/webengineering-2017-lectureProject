@@ -46,22 +46,27 @@ class Chat extends Component {
                     response.data.forEach(message =>{
                         array.push({side:'right', text:message.message});
                     });
-                    this.setState({messages:array});
 
-                    //if(!(this.props.match.url.substring(0,8) == '/api/chat')){
-                      //  console.log("new Message");
+                    this.setState({messages:array});
+                    /*
+                    if(this.props.match.url.substring(0,9) != '/api/chat'){
+                        console.log("new Message");
                         //this.setState({newMessage: true});
-                    //}
+                    }
+                    else{
+
+                    }
+                    */
                 });
         }, 5000);
 
         this.setState({interval:intervalID});
+
     }
 
     //Wenn die Komponente verlassen wird: resete den interval
     componentWillUnmount(){
         clearInterval(this.state.interval);
-
     }
 
     handleChangeMessageField(event){
@@ -85,7 +90,7 @@ class Chat extends Component {
                 <div class="chat_window">
                     <div class="top_menu">
 
-                        <div class="title">{this.state.chatPartner && this.state.chatPartner.email }</div>
+                        <div class="title">{this.state.chatPartner && this.state.chatPartner.nickname }</div>
                     </div>
                     <ul class="messages">
                         {this.state.messages.map((message, index) => {
@@ -97,7 +102,11 @@ class Chat extends Component {
                             </li>;
                         })}
                     </ul>
-                    <div class="bottom_wrapper clearfix" onKeyPress={(e) => {if(e.keyCode == 13){console.log("HI")}}}>
+                    <div class="bottom_wrapper clearfix" onKeyPress={(e) => {
+                        if(e.charCode == 13){
+                            this.sendMessage()}
+                        }
+                    }>
                         <div class="message_input_wrapper">
                             <input class="message_input" value={this.state.myMessage}
                                                                   onChange={this.handleChangeMessageField.bind(this)}
