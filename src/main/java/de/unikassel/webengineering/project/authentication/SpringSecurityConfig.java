@@ -6,12 +6,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * Created by Luan Hajzeraj on 07.07.2017.
+ * @author Luan Hajzeraj on 07.07.2017.
  */
+
+
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
-    //Erlaube grundsätzlich alles
+
+    /**
+     * Spring-Sicherheitskonfiguration (erlaubt grundsätzlich alles; verwendung nur für Kontext)
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

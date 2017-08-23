@@ -13,8 +13,12 @@ import java.util.List;
 
 
 /**
+ * Controller-Schnittstelle für alle Nachrichten
+ *
  * @author Luan Hajzeraj on 08.07.2017.
  */
+
+
 @RestController
 public class MessageController {
     private static final Logger LOG = LoggerFactory.getLogger(MessageController.class);
@@ -26,6 +30,11 @@ public class MessageController {
     private UserService userService;
 
 
+    /**
+     * Methode zum versenden einer neuen Nachricht
+     * @param message
+     * @return Status 200 oder Status 401
+     */
     @RequestMapping(value = "/api/message/newMessage", method = RequestMethod.POST)
     public ResponseEntity saveMessage(@RequestBody Message message){
         if(userService.isAnonymous()){
@@ -37,16 +46,31 @@ public class MessageController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Methode zur Rückgabe aller Nachrichten
+     * @return Liste mit allen Nachrichten
+     */
     @RequestMapping(value = "api/message/all", method = RequestMethod.GET)
     public List<Message> getAllMessages(){
         return messageService.getAllMessages();
     }
 
+
+    /**
+     * Methoder zur Rückgabe von allen Nachrichten des aktuell eingeloggten Users
+     * @return Liste von allen Nachrichten des aktuellen Users
+     */
     @RequestMapping(value = "/api/message/myMessages", method = RequestMethod.GET)
     public List<Message> getMessagesOfActualUser(){
         return messageService.getMessagesOfActualUser(userService.getCurrentUser());
     }
 
+
+    /**
+     * Methoder zur Rückgabe aller ungelesenen Nachrichten eines bestimmten Chat-Partners
+     * @param id
+     * @return Liste von ungelesenen Nachrichten mit einem bestimmten Partner
+     */
     @RequestMapping(value = "/api/message/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<Message>> getUnreadMessagesByID(@PathVariable Long id){
         User me = userService.getCurrentUser();
@@ -68,6 +92,10 @@ public class MessageController {
         return new ResponseEntity<>(unreadMessages, HttpStatus.OK);
     }
 
+    /**
+     * Methoder zur Rückgbabe von generell ungelesenen Nachrichten (Chat-Partner unabhängig)
+     * @return Liste von ungelesenen Nachrichten
+     */
     @RequestMapping(value = "/api/message/", method = RequestMethod.GET)
     public ResponseEntity<List<Message>> getUnreadMessages(){
         User me = userService.getCurrentUser();

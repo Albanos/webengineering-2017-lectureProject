@@ -1,7 +1,6 @@
 package de.unikassel.webengineering.project.user;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.hibernate.mapping.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.*;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.*;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,17 +26,31 @@ public class UserService {
     @Value("${authenticationService.salt}")
     private String salt;
 
+
+    /**
+     * Methode zur Rückgabe aller User in der Datenbank
+     * @return Liste aller User
+     */
     public List<User> getUserList(){
         //return userRepository.getUserList();
         return userRepository.findAll();
     }
 
+    /**
+     * Methode zur Rückgabe eines bestimmten Users aus der Datenbank (mittels User-ID)
+     * @param id
+     * @return User
+     */
     public User getUserByID(Long id){
-        //return userRepository.findOne(id);
         return userRepository.findOne(id);
     }
 
-    //public User getUserByMailAndPassword(String email, String password){
+    /**
+     * Methode zur Rückgabe eines bestimmten Users aus der Datenbank (mittels email und PW)
+     * @param email
+     * @param password
+     * @return User
+     */
     public UserResponse getUserByMailAndPassword(String email, String password){
         //return userRepository.findByEmailAndPassword(email, password);
 
@@ -48,12 +60,15 @@ public class UserService {
         if(user == null){
             return null;
         }
-        UserResponse userResponse = new UserResponse(user);
 
-        return userResponse;
+        return new UserResponse(user);
 
     }
 
+    /**
+     * Methode zum hinzufügen eines neuen Users zur Datenbank
+     * @param user
+     */
     public void addUser(User user){
         String hashedPassword = hashPassword(user.getPassword());
         user.setPassword(hashedPassword);
@@ -61,6 +76,10 @@ public class UserService {
         userRepository.save(user);
     }
 
+    /**
+     * Methode zum Löschen eines bestimmten Users aus der Datenbank
+     * @param id
+     */
     public void deleteUSerByID(Long id){
         userRepository.delete(id);
     }
@@ -72,17 +91,17 @@ public class UserService {
 
 
     /**
-     * Sets the current user to anonymous.
+     * Methode zum setzen des aktuellen Users auf "anonymus"
      */
     public void setAnonymous() {
         setCurrentUser(-1L, "<anonymous>");
     }
 
     /**
-     * Set a user for the current request.
+     * Methode zum setzen des aktuell eingeloggten Users
      *
-     * @param id    user id
-     * @param email user email
+     * @param id
+     * @param email
      */
     public void setCurrentUser(Long id, String email) {
         LOG.debug("Setting user context. id={}, user={}", id, email);
@@ -94,28 +113,20 @@ public class UserService {
     }
 
     /**
-     * Check if the current user is not authenticated.
+     * Methode zum Prüfen, ob der aktuelle User "anonymus" ist oder nicht
      *
-     * @return true if the user is not authenticated.
+     * @return true, wenn User authentifiziert ist
      */
     public boolean isAnonymous() {
         return getCurrentUser().getId() == -1L;
     }
 
+
+    /**
+     * Methode zur Rückgabe eines noch ungelesenen/nicht kategorisierten User-textes
+     * @return User
+     */
     public User getNextUnreadUser(){
-        /*
-        User actualLoggedInUser = getCurrentUser();
-
-        User nowUser = userRepository.findOne(actualLoggedInUser.getId());
-
-        Set<Long> temp2 = new HashSet<>();
-
-        for(User u : nowUser.getFollowI()){
-            temp2.add(u.getId());
-        }
-
-        User temp = userRepository.findByIdNotIn(temp2);
-        */
 
         User me = getCurrentUser();
         User meExact = userRepository.findOne(me.getId());
@@ -130,26 +141,23 @@ public class UserService {
         List<Long> dislikeI = meExact.getDislike().stream().map(User::getId).collect(Collectors.toList());
         followI.add(me.getId());
 
-
-        //User oneByIdNotIn = userRepository.findFirstByIdNotIn(followI);
-        //User oneByIdNotIn = userRepository.findOneByIdNotIn(followI);
-        //User oneByIdNotIn = userRepository.findLastByIdNotIn(followI);
         List<User> usersIdNotIn = userRepository.findAllByIdNotIn(followI, dislikeI);
+
 
         if(usersIdNotIn.size() > 0){
             Random randomizer = new Random();
-            User random = usersIdNotIn.get(randomizer.nextInt(usersIdNotIn.size()));
 
-            return random;
+            return usersIdNotIn.get(randomizer.nextInt(usersIdNotIn.size()));
         }
+
         return null;
-
-        //return oneByIdNotIn;
-
-
 
     }
 
+    /**
+     * Methode zum "liken" eines Usertextes: eintragen in die like-liste des aktuell eingeloggten Users
+     * @param id
+     */
     public void likeTextOfUserWithID(Long id){
         User me = getCurrentUser();
         User meExact = userRepository.findOne(me.getId());
@@ -161,6 +169,11 @@ public class UserService {
         userRepository.save(meExact);
     }
 
+
+    /**
+     * Methode zum "disliken" eines Usertextes: eintragen in die dislike-liste des aktuell eingeloggten Users
+     * @param id
+     */
     public void dislikeTextOfUserWithID(Long id){
         User me = getCurrentUser();
         User meExact = userRepository.findOne(me.getId());
@@ -172,7 +185,11 @@ public class UserService {
         userRepository.save(meExact);
     }
 
-    //Gibt gehastes Password zurück
+    /**
+     * Methode zur Rückgabe des gehasten Passworts eines Users
+     * @param password
+     * @return Passwort als hash-wert
+     */
     public String hashPassword(String password) {
         return DigestUtils.sha512Hex(salt + password);
     }

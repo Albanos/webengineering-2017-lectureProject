@@ -1,4 +1,6 @@
 /**
+ * Login-Komponente für den User
+ *
  * @author Luan Hajzeraj on 31.07.2017.
  */
 
@@ -19,7 +21,7 @@ class Authentication extends React.Component {
             password: '',
             error: undefined,
             lang: 'en',
-            history:props.history
+            history: props.history
         };
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);

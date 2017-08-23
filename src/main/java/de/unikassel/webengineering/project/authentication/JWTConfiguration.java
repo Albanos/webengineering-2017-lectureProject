@@ -18,12 +18,15 @@ public class JWTConfiguration {
     @Autowired
     private UserService userService;
 
+    /**
+     * JWT-Filter für jedwede Anfrage mit "/api/..."
+     * @return generierter Filter
+     */
     @Bean
     public FilterRegistrationBean jwtFilter(){
         FilterRegistrationBean bean = new FilterRegistrationBean();
         bean.setFilter(new JWTFilter(authenticationService, userService));
 
-        //Alles, was aus der URL /api/*irgendwas* besteht, filtere über den JWTFilter
         bean.addUrlPatterns("/api/*");
 
         return bean;

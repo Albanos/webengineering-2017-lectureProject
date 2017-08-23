@@ -11,13 +11,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * Datenmodell des Users
+ *
  * @author Luan Hajzeraj on 29.06.2017.
  */
 
-//http://wiki.fasterxml.com/JacksonFeatureObjectIdentity
-    //MERKE: @JsonIdentiyInfo macht beim senden von Nachrichten Probleme, deshalb auskommentiert
+
 @Entity(name = "User_")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class User {
 
     @Id
@@ -35,6 +35,7 @@ public class User {
 
     //Nach Beispiel von:
     //https://stackoverflow.com/questions/13708271/self-referencing-manytomany-with-hibernate-and-annotations
+
     //User, die mich "liken"
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="Likes",
@@ -88,7 +89,6 @@ public class User {
         this.email = email;
     }
 
-    //@JsonIgnore
     public String getPassword() {
         return password;
     }

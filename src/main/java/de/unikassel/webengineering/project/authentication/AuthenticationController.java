@@ -39,6 +39,12 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
+
+    /**
+     * REST-Schnittstelle für Userlogin
+     * @param userLogin
+     * @return Status 200 mit User-token im header oder Status 401
+     */
     @RequestMapping(value = "/api/user/login", method = RequestMethod.POST)
     public ResponseEntity<UserResponse> login(@RequestBody UserLogin userLogin){
 
@@ -54,11 +60,14 @@ public class AuthenticationController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization","Bearer "+tokenResponse.token);
 
-        //userService.setCurrentUser(tokenResponse.userResponse.getId(), tokenResponse.userResponse.getUserName());
 
         return new ResponseEntity<UserResponse>(tokenResponse.userResponse ,headers, HttpStatus.OK);
     }
 
+    /**
+     * Gibt den aktuell eingeloggten User zurück
+     * @return Status 200 mit UserResponse oder Satus 404
+     */
     @RequestMapping(value="/api/user/actualUser", method = RequestMethod.GET)
     public ResponseEntity<UserResponse> getActualLoggedInUser(){
         UserResponse userResponse = service.getActualLoggedInUser();

@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 /**
- * Created by Luan Hajzeraj on 09.07.2017.
+ * Schnittstelle zur Datenbank für Nachrichten
+ *
+ * @author Luan Hajzeraj on 09.07.2017.
  */
 public interface MessageRepository extends CrudRepository<Message, Long> {
 

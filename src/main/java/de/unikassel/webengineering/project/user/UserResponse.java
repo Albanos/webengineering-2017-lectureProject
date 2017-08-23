@@ -5,9 +5,10 @@ import java.util.stream.Collectors;
 
 
 /**
+ * Ist eine Hilfklasse für den Response des Users, bspw. nach dem Login.
+ *
  * @author Luan Hajzeraj
- * Ist eine Hilfklasse für den Response des Users, bspw. nach dem Login. Diese wird benötigt, weil die
- * aktuelle Konstruktion von "Likes" und "gelikt-werden" sonst einen Überlauf erzeugen würde...
+ *
  */
 public class UserResponse {
     private Long id;

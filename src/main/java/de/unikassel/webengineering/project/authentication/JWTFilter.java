@@ -19,8 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Luan Hajzeraj on 03.07.2017.
+ * @author Luan Hajzeraj on 03.07.2017.
  */
+
+
 public class JWTFilter extends GenericFilterBean {
     private static final Logger LOG = LoggerFactory.getLogger(JWTFilter.class);
 
@@ -32,7 +34,14 @@ public class JWTFilter extends GenericFilterBean {
         this.userService = userService;
     }
 
-
+    /**
+     * Anwendung des zuvor definierten Filters für HTTP-Anfragen
+     * @param request
+     * @param response
+     * @param filterChain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
@@ -45,7 +54,6 @@ public class JWTFilter extends GenericFilterBean {
 
         //Entspricht das Token nicht dem zurück-gelieferten: Gebe ein 401 zurück
         if(!StringUtils.startsWithIgnoreCase(auth,"Bearer ")){
-            //LOG.warn("No authorization token submitted!");
 
             // Allow requests without a token.
             LOG.debug("No token provided, setting to anonymous user");
@@ -69,10 +77,7 @@ public class JWTFilter extends GenericFilterBean {
                 LOG.info("ID from User={} is null. Do you forget to send the JWT-Token!?", body.getSubject());
             }
 
-            //Setze im Request den User als aktuellen/aktuell angemeldeten User
-            //authenticationService.setUser(Long.parseLong(body.getId()), body.getSubject());
 
-//            filterChain.doFilter(request, response);
         } catch (SignatureException e) {
             LOG.warn("Token is invalid: {}", token);
             httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

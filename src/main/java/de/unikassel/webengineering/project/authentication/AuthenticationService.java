@@ -29,8 +29,6 @@ public class AuthenticationService {
     @Value("${authenticationService.salt}")
     private String salt;
 
-    //Start-Secret für das JWT-Token
-    //String secret = "Severus Snape was a good guy!";
 
     @Value("${authenticationService.jwt.secret}")
     private String JWTSecret;
@@ -41,6 +39,13 @@ public class AuthenticationService {
         public String token;
     }
 
+
+    /**
+     * Service-methode für den Login des Users
+     * @param email
+     * @param password
+     * @return Token des Users
+     */
     public UserToken login(String email, String password){
         String hashedPassword = hashPassword(password);
         //User user = userService.getUserByMailAndPassword(email, hashedPassword);
@@ -72,7 +77,11 @@ public class AuthenticationService {
         return userToken;
     }
 
-    //Parse das Token zu einem String, um es im JWTFilter auf validität prüfen zu können
+    /**
+     * Parst das JWT-Token, um es im JWT-Filter validieren zu können
+     * @param jwtToken
+     * @return gepastes Token
+     */
     public Object parseToken(String jwtToken) {
         return Jwts.parser()
                 .setSigningKey(JWTSecret)
@@ -80,6 +89,12 @@ public class AuthenticationService {
                 .getBody();
     }
 
+
+    /**
+     * Setzt den aktuell eingeloggten User
+     * @param id
+     * @param email
+     */
     public void setUser(Long id, String email) {
         User user = new User();
         user.setId(id);
@@ -88,11 +103,20 @@ public class AuthenticationService {
         SecurityContextHolder.getContext().setAuthentication(secAuth);
     }
 
-    //Gibt gehastes Password zurück
+    /**
+     * Methode für Rückgabe des gehasten Passworts (einschliesslich SALT)
+     * @param password
+     * @return gehashtes Passwort
+     */
     public String hashPassword(String password) {
         return DigestUtils.sha512Hex(salt + password);
     }
 
+
+    /**
+     * Methode für Rückgabe des aktuell eingeloggten Users
+     * @return UserResponse des aktuellen Users
+     */
     public UserResponse getActualLoggedInUser(){
         User user = userService.getCurrentUser();
 

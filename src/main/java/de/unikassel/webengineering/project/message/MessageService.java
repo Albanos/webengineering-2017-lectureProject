@@ -29,9 +29,12 @@ public class MessageService {
         return messageRepository.findAll();
     }
 
-
+    /**
+     * Methode zur Rückgabe der Nachrichten des aktuell eingeloggten Users
+     * @param user
+     * @return Liste von Nachrichten des aktuell eingeloggten Users
+     */
     public List<Message> getMessagesOfActualUser(User user){
-//    public Iterable<Message> getMessagesOfActualUser(User user){
 
         //Wenn der User kein JWT-Token mitsendet, ist es der annonymus-User. Dieser hat keine
         //messages
@@ -42,6 +45,13 @@ public class MessageService {
         return messageRepository.findByToUser(user);
     }
 
+
+    /**
+     * Methoder zur Rückgabe von ungelesenen Nachrichten zwischen einem User und seinem Chat-Partner
+     * @param me
+     * @param partner
+     * @return Liste von ungelesenen Nachrichten
+     */
     public List<Message> getUnreadMessages(User me, User partner) {
 
         List<Message> unreadMessages = messageRepository.findAllByAuthorAndToUserAndIsRead(partner, me, false);
@@ -54,6 +64,11 @@ public class MessageService {
         return unreadMessages;
     }
 
+    /**
+     * Methoder zur Rückgabe aller ungelesenen Nachrichten (Chat-Partner unabhängig)
+     * @param me
+     * @return Liste von ungelesenen Nachrichten
+     */
     public List<Message> getUnreadMessages(User me) {
         return messageRepository.findAllByToUserAndIsRead(me, false);
     }

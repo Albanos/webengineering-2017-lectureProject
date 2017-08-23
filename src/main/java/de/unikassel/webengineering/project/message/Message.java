@@ -8,8 +8,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
+ * Datenmodell für Nachrichten (werden innerhalb von Chats genutzt)
+ *
  * @author Luan Hajzeraj on 08.07.2017.
  */
+
 //Message allein konnte nicht gemappt werden...
 @Entity(name="Message_")
 public class Message {
