@@ -42,6 +42,17 @@ Im Chat-Bereich ist als erste Nachricht der Usertext des Partners zu sehen. Die 
 ### Trefferspiel
 Über die Navigationsleiste ist auch das Treffer-Spiel erreichbar. Dort können Texte, die von einem User noch nicht kategorisiert wurden (like oder dislike) angesehen und bewertet werden. Je nach Entscheidung werden die Texte dem Benutzer zugeordnet: gelikte wie auch nicht gelikte texte werden in Listen des Users abgelegt und danach nicht mehr im Treffer-Spiel angezeigt. Die gelikten Usertexte sind im Bereich "Aktueller Benutzer" unter der Liste "Folge ich" zu finden.
 
-## Fehlerbehandlung
+### Fehlerbehandlung
 Ist der Loginvorgang oder die Kontoeinrichtung nicht möglich, erscheinen entsprechende Alarm-banner auf dem Bildschirm (natürlich immer in der jeweills gesetzten Sprache). Werden beim Treffer-spiel alle Benutzertexte "aufgebraucht" (weil alle Texte von einem User bereits bewertet wurden) erscheint ebenfalls ein Alarm-Fenster auf dem Bildschirm mit einem entsprechenden Hinweis.
 Sollte der User versuchen über die URL aus seinem Browserverlauf zu einer bestimmten Seite zu springen, ohne dabei angemeldet zu sein, wird er automatisch an den Login-Bereich weitergeleitet, wo ein Login oder eben eine Konto-Anlegung möglich ist.
+
+## Datenbestand, Initialzustand & Neustart
+### Lokal
+Die Datenbank der Anwendung verfügt über acht Benutzer (siehe im Projekt -> src -> main -> resources -> data-h2.sql). Der Datei ist auch zu entnehmen, in welcher Beziehung die User zueinander stehen (bspw. besteht ein Match zwischen Luan und Rovi). Um übergroße Datenmengen in der Datenbank zu verhindern und um nach jedem Neustart immer wieder den Initialzustand zu besitzen, wird dieser Initialzustand **nach jedem Neustart der Anwendung wiederhergestellt.** Um dies zu verhindern, muss der Inhalt der Datei data-h2.sql auskommentiert werden.
+
+### Unter Heroku
+Die Postgres-Datenbank, welche für die Persistierung unter Heroku verantwortlich ist, verfügt über exakt den selben Datenbestand, wie die lokale Version. Die deployte Onlineversion ist unter der folgenden URL erreichbar:
+```
+https://webengineering-2017-project.herokuapp.com/
+```
+Da hier kein "Neustart" der Anwendung durchgeführt wird, **bleiben die durchgeführten Operationen erhalten (like/dislike,...).** Erst nachdem die Anwendung über Heroku neugestartet wird, wird der selbe Initialzustand wie zuvor (und auch wie bei jedem Neustart der lokalen Anwendung) wiederhergestellt.
