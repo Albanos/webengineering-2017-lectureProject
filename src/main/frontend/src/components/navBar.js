@@ -1,4 +1,6 @@
 /**
+ * Navigationsleiste als eigene Komponente
+ *
  * @author Luan Hajzeraj on 06.08.2017.
  */
 
@@ -14,13 +16,14 @@ class NavBar extends React.Component {
 
         this.state = {
             loggedIn: undefined,
-            history:props.history
+            history: props.history
         };
         window.updateNavbar = function () {
             this.setState({loggedIn: stillOnlineCheck()});
         }.bind(this);
     }
 
+    //Wenn User online: Zeige diesen in der Navigationsleiste an
     componentWillMount() {
         this.state.loggedIn = stillOnlineCheck();
     }
@@ -56,7 +59,7 @@ class NavBar extends React.Component {
                     </ul>
                     }
                     <ul class="nav navbar-nav navbar-right">
-                        {this.state.loggedIn  && <li><a>{this.state.loggedIn.nickname}</a></li> }
+                        {this.state.loggedIn && <li><a>{this.state.loggedIn.nickname}</a></li> }
                         {this.state.loggedIn ?
                             <li><a href onClick={this.handleLogout.bind(this)}>{t('logout')}</a></li>
                             :

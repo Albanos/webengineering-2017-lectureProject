@@ -1,9 +1,8 @@
 /**
- * @author Luan Hajzeraj on 06.08.2017.
+ * Hilfskomponente: Bündelt jedwede Kommunikation mit Backend
  *
- * @description Zusammenfassung aller im frontend relevanten Schnittstellen zum Server
+ * @author Luan Hajzeraj on 06.08.2017.
  */
-
 
 
 import axios from 'axios';
@@ -29,36 +28,56 @@ axios.interceptors.response.use(undefined, (error) => {
 });
 
 
-//Export von allen folgenden Methoden:
-export {getActualUser, getAllUsers, getNextUnreadUsertext, likeUsertext, dislikeUsertext, stillOnlineCheck, login, logout, signUp, getUserByID,
-sendChatMessage, getUnreadMessages};
+export {
+    getActualUser,
+    getNextUnreadUsertext,
+    likeUsertext,
+    dislikeUsertext,
+    stillOnlineCheck,
+    login,
+    logout,
+    signUp,
+    getUserByID,
+    sendChatMessage,
+    getUnreadMessages
+};
 
-function getUnreadMessages(partnerID){
-    return axios.get('/api/message/'+(partnerID ? partnerID : ''));
+/**
+ * Methode zum Abrufen von ungelesenen Nachrichten: Entweder alle ungelesenen oder von einem best. Partner
+ * @param {undefined|Number} partnerID - Für alle Nachrichten keine partnerID übergeben
+ * @returns {AxiosPromise} - Besteht aus einem Array von Messages
+ */
+function getUnreadMessages(partnerID) {
+    return axios.get('/api/message/' + (partnerID ? partnerID : ''));
 }
 
-function sendChatMessage(author,toUser,message){
-    return axios.post('/api/message/newMessage',{
-        author:{id:author},
-        toUser:{id:toUser},
-        message:message
+/**
+ * Sendet eine neue Nachricht zu einem bestimmten User
+ * @param {Number} author - ID des Absenders
+ * @param {Number} toUser - ID des Empfängers
+ * @param {String} message - Eigentliche Nachricht
+ * @returns {AxiosPromise|*}
+ */
+function sendChatMessage(author, toUser, message) {
+    return axios.post('/api/message/newMessage', {
+        author: {id: author},
+        toUser: {id: toUser},
+        message: message
     });
 }
 
-
-function getUserByID(id){
-    return axios.get('/api/user/'+id);
+function getUserByID(id) {
+    return axios.get('/api/user/' + id);
 }
-
 
 function getActualUser() {
     return axios.get('/api/user/actualUser');
 }
 
-function getAllUsers() {
-    return axios.get('/api/user');
-}
-
+/**
+ * Methode zum abrufen eines nicht-kategorisierten Usertextes zum liken oder disliken
+ * @returns {AxiosPromise} - User
+ */
 function getNextUnreadUsertext() {
     return axios.get('/api/user/nextUnread');
 }
@@ -69,12 +88,16 @@ function likeUsertext(id) {
     });
 }
 
-function dislikeUsertext(id){
+function dislikeUsertext(id) {
     return axios.post('/api/user/dislike', {
-        id:id
+        id: id
     });
 }
 
+/**
+ * Methode liest aus Cookie den aktuellen User und setzt ihn
+ * @returns {User|undefined}
+ */
 function stillOnlineCheck() {
     let auth = cookies.get('auth');
 
@@ -86,6 +109,9 @@ function stillOnlineCheck() {
     }
 }
 
+/**
+ * Methode zum durchführen eines logouts (am backend)
+ */
 function logout() {
     //TODO: Eventuell noch ein logout im Backend implementieren
     delete axios.defaults.headers.common['Authorization'];
@@ -98,6 +124,12 @@ function logout() {
     window.updateNewMessagePopUp();
 }
 
+/**
+ * Methode zum durchführen eines logins am backend
+ * @param {String} email
+ * @param  {String} password
+ * @returns {Promise.<User>}
+ */
 function login(email, password) {
     return axios.post('/api/user/login', {
         email: email,
@@ -120,6 +152,13 @@ function login(email, password) {
     });
 }
 
+/**
+ * Methode zum Anlegen eines Benutzerkontos mit anschliessendem Login
+ * @param {String} email
+ * @param {String} password
+ * @param {String} usertext
+ * @returns {Promise.<User>}
+ */
 function signUp(email, password, usertext) {
     return axios.post('/api/user', {
         email: email,

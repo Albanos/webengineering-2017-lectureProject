@@ -1,6 +1,8 @@
 /**
-    * @author Luan Hajzeraj on 31.07.2017.
-    */
+ * Hilfskomponente zum verwalten des aktuell eingeloggten Users
+ *
+ * @author Luan Hajzeraj on 31.07.2017.
+ */
 
 class User {
     constructor() {
@@ -16,13 +18,13 @@ class User {
         return !this.isAuthenticated();
     }
 
-    setUser(nickname, id){
+    setUser(nickname, id) {
         this.nickname = nickname;
         this.id = id;
     }
 
-    resetUser(){
-        this.setUser(undefined,-1);
+    resetUser() {
+        this.setUser(undefined, -1);
     }
 }
 

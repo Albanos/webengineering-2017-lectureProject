@@ -1,4 +1,6 @@
 /**
+ * Trefferspiel des Users (für like und dislike von Usertexten)
+ *
  * @author Luan Hajzeraj on 03.08.2017.
  */
 
@@ -8,7 +10,6 @@ import {withRouter} from 'react-router-dom';
 
 import {getNextUnreadUsertext, likeUsertext, dislikeUsertext, getActualUser} from "../util/Http";
 import {translate} from "react-i18next";
-import i18n from "../i18n";
 
 class MatchGame extends React.Component {
     constructor(props) {
@@ -17,15 +18,12 @@ class MatchGame extends React.Component {
             text: [],
             id: undefined,
             error: false,
-            history:props.history
+            history: props.history
         };
 
         this.handleLike = this.handleLike.bind(this);
-
-        //i18n.changeLanguage("en");
     }
 
-    // This function is called before render() to initialize its state.
     componentWillMount() {
         getNextUnreadUsertext()
             .then((response) => {
@@ -54,8 +52,6 @@ class MatchGame extends React.Component {
     }
 
     handleDislike() {
-        //event.preventDefault();
-
         dislikeUsertext(this.state.id)
             .then(() => {
                 this.componentWillMount();
@@ -74,8 +70,11 @@ class MatchGame extends React.Component {
                     <div class="well">
                         <i>{this.state.text}</i>
                     </div>
-                    <button type="button" class="btn btn-success btn-lg" onClick={this.handleLike}><span class="glyphicon glyphicon-thumbs-up"/> {t('like')}</button>&emsp;&emsp;
-                    <button type="button" class="btn btn-danger btn-lg" onClick={this.handleDislike.bind(this)}><span class="glyphicon glyphicon-thumbs-down"/> {t('dislike')}</button>
+                    <button type="button" class="btn btn-success btn-lg" onClick={this.handleLike}><span
+                        class="glyphicon glyphicon-thumbs-up"/> {t('like')}</button>
+                    &emsp;&emsp;
+                    <button type="button" class="btn btn-danger btn-lg" onClick={this.handleDislike.bind(this)}><span
+                        class="glyphicon glyphicon-thumbs-down"/> {t('dislike')}</button>
                 </div>
                 <br/>
 

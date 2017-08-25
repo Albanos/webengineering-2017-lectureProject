@@ -66,7 +66,7 @@ public class AuthenticationController {
 
     /**
      * Gibt den aktuell eingeloggten User zurück
-     * @return Status 200 mit UserResponse oder Satus 404
+     * @return Status 200 mit UserResponse oder Status 404
      */
     @RequestMapping(value="/api/user/actualUser", method = RequestMethod.GET)
     public ResponseEntity<UserResponse> getActualLoggedInUser(){

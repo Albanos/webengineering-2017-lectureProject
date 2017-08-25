@@ -1,4 +1,6 @@
 /**
+ * Übersichtsseite des aktuell eingeloggten Nutzers
+ *
  * @author Luan Hajzeraj on 30.07.2017.
  */
 
@@ -8,7 +10,6 @@ import {Link, withRouter} from 'react-router-dom';
 
 import {getActualUser} from '../util/Http';
 import {translate} from "react-i18next";
-import i18n from "../i18n";
 
 class CurrentUser extends React.Component {
     constructor(props) {
@@ -18,13 +19,10 @@ class CurrentUser extends React.Component {
             matches: [],
             followI: [],
             followMe: [],
-            history:props.history
+            history: props.history
         };
-
-        //i18n.changeLanguage("en");
     }
 
-    // This function is called before render() to initialize its state.
     componentWillMount() {
         getActualUser()
             .then(({data}) => {
@@ -122,4 +120,4 @@ class CurrentUser extends React.Component {
 }
 
 
-export default withRouter(translate() (CurrentUser));
+export default withRouter(translate()(CurrentUser));

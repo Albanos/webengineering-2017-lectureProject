@@ -1,4 +1,6 @@
 /**
+ * Konfiguration für Sprachen (Deutsch und Englisch)
+ *
  * @author Luan Hajzeraj on 12.08.2017.
  */
 

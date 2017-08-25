@@ -7,9 +7,7 @@
 import React from "react";
 import {HashRouter as Router, Route, Link, withRouter} from 'react-router-dom';
 
-import User from "../util/User";
 import {translate} from "react-i18next";
-import i18n from "../i18n";
 import SignUp from "./signUp";
 import {login, logout} from "../util/Http"
 
@@ -28,8 +26,8 @@ class Authentication extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
 
-
     }
+
 
     handleLogout() {
         logout();
@@ -54,40 +52,9 @@ class Authentication extends React.Component {
             .catch(() => this.setState({error: true}));
     }
 
-    //Wir packen den Teil, der konditional gerendert werden soll in eine separate variable. Gleiche Funktionalität
-    //wie unten, nur kompakter, in einer komponente
     render() {
 
         const {t} = this.props;
-        let component =
-                <Router>
-                    <form onSubmit={this.handleSubmit.bind(this)}>
-                        {/*Note that the HTML structure will be changed later when we add Bootstrap/CSS*/}
-                        <label>
-                            Email
-                            <input type="text" name="email" value={this.state.email} onChange={this.handleEmailChange}/>
-                        </label>
-                        <label>
-                            Password
-                            <input type="password" name="password" value={this.state.password}
-                                   onChange={this.handlePasswordChange}/>
-                        </label>
-                        <input type="submit" value="Submit"/>
-                        <br/>
-                        <br/>
-                        <div>
-                            <Route path="/signUp" component={SignUp}/>
-                            <Link to="/signUp">Sign Up</Link>
-                        </div>
-                        {/*<span onClick={this.handleSignUp}>Sign up</span>*/}
-
-                    </form>
-
-                </Router>
-
-            ;
-
-
         return (
 
             <Router>

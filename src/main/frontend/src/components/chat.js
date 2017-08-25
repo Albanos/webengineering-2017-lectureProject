@@ -1,4 +1,6 @@
 /**
+ * Chat-Komponente für Nachrichten
+ *
  * @author Luan Hajzeraj on 06.08.2017.
  */
 
@@ -8,79 +10,67 @@ import {getUserByID, sendChatMessage, getUnreadMessages} from '../util/Http';
 import User from '../util/User';
 
 
-//Template from: https://bootsnipp.com/snippets/ZlkBn
+//Template von: https://bootsnipp.com/snippets/ZlkBn
 class Chat extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             id: props.match.params.id,
-            messages:[],
+            messages: [],
             chatPartner: undefined,
-            myMessage:'',
-            interval:undefined,
+            myMessage: '',
+            interval: undefined,
             newMessage: undefined
         };
 
     }
 
     //left=messages von mir
-    //rigt=messages des partners
-    componentWillMount(){
-        let component = null;
+    //right=messages des partners
+    componentWillMount() {
         getUserByID(this.state.id)
             .then(response => {
                 this.setState({
-                    chatPartner:response.data,
-                    messages:[{side:'right',text:response.data.usertext}]
+                    chatPartner: response.data,
+                    messages: [{side: 'right', text: response.data.usertext}]
                 });
-        });
+            });
     }
 
-    //Wenn Komponente schon gerendert ist: Lade alle NAchrichten und definiere einen Abfrage-interval
-    componentDidMount(){
+    //Wenn Komponente schon gerendert ist: Lade alle Nachrichten und definiere einen Abfrage-intervall
+    componentDidMount() {
         let intervalID = setInterval(() => {
             getUnreadMessages(this.state.id)
-                .then(response =>{
+                .then(response => {
                     var array = this.state.messages;
-                    response.data.forEach(message =>{
-                        array.push({side:'right', text:message.message});
+                    response.data.forEach(message => {
+                        array.push({side: 'right', text: message.message});
                     });
 
-                    this.setState({messages:array});
-                    /*
-                    if(this.props.match.url.substring(0,9) != '/api/chat'){
-                        console.log("new Message");
-                        //this.setState({newMessage: true});
-                    }
-                    else{
-
-                    }
-                    */
+                    this.setState({messages: array});
                 });
         }, 5000);
 
-        this.setState({interval:intervalID});
+        this.setState({interval: intervalID});
 
     }
 
     //Wenn die Komponente verlassen wird: resete den interval
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearInterval(this.state.interval);
     }
 
-    handleChangeMessageField(event){
+    handleChangeMessageField(event) {
         this.setState({myMessage: event.target.value})
     }
 
-
-    sendMessage(){
-        sendChatMessage(User.id,this.state.id,this.state.myMessage)
-            .then(() =>{
+    sendMessage() {
+        sendChatMessage(User.id, this.state.id, this.state.myMessage)
+            .then(() => {
                 let array = this.state.messages;
-                array.push({side:'left', text:this.state.myMessage});
-                this.setState({messages:array});
-                this.setState({myMessage: ''});
+                array.push({side: 'left', text: this.state.myMessage});
+                this.setState({messages: array, myMessage: ''});
             });
     }
 
@@ -103,14 +93,15 @@ class Chat extends Component {
                         })}
                     </ul>
                     <div class="bottom_wrapper clearfix" onKeyPress={(e) => {
-                        if(e.charCode == 13){
-                            this.sendMessage()}
+                        if (e.charCode == 13) {
+                            this.sendMessage()
                         }
+                    }
                     }>
                         <div class="message_input_wrapper">
                             <input class="message_input" value={this.state.myMessage}
-                                                                  onChange={this.handleChangeMessageField.bind(this)}
-                                                                  placeholder="Type your message here..."/>
+                                   onChange={this.handleChangeMessageField.bind(this)}
+                                   placeholder="Type your message here..."/>
                         </div>
                         <div class="send_message" onClick={this.sendMessage.bind(this)}>
                             <div class="icon"></div>
