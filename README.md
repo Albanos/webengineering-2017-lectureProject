@@ -1,10 +1,10 @@
 # Überblick
-Dies ist das Repository der Projektaufgabe, welche im Rahmen der Veranstaltung Webengineering entwickelt wurde.
+Dies ist das Repository der Projektaufgabe, welche im Rahmen der Veranstaltung Webengineering im Sommersemester 2017 entwickelt wurde.
 
 ## Installation des Projektes
 Das Projekt wurde mit Maven entwickelt. Demzufolge ist nach dem Checkout aus diesem repository der Download und die Integration der genutzten Dependencys mit folgendem Befehl möglich:
 ```
-mvn instll clean
+mvn install clean
 ```
 
 Das Frontend wurde mit unteranderem mit Webpack entwickelt. Um dieses starten zu können, gilt es zum frontend-verzeichnis zu navigieren und dort folgenden Befehl auszuführen:
