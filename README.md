@@ -48,7 +48,12 @@ Sollte der User versuchen über die URL aus seinem Browserverlauf zu einer besti
 
 ## Datenbestand, Initialzustand & Neustart
 ### Lokal
-Die Datenbank der Anwendung verfügt über acht Benutzer (siehe im Projekt -> src -> main -> resources -> data-h2.sql). Der Datei ist auch zu entnehmen, in welcher Beziehung die User zueinander stehen (bspw. besteht ein Match zwischen Luan und Rovi). Um übergroße Datenmengen in der Datenbank zu verhindern und um nach jedem Neustart immer wieder den Initialzustand zu besitzen, wird dieser Initialzustand **nach jedem Neustart der Anwendung wiederhergestellt.** Um dies zu verhindern, muss der Inhalt der Datei data-h2.sql auskommentiert werden.
+Die Datenbank der Anwendung verfügt über acht Benutzer (siehe im Projekt -> src -> main -> resources -> data-h2.sql). Eine kurze Übersicht über die "Initial-Beziehungen" der User zueinander:
+* Luan liket Rovi und umgekehrt (=> Match)
+* Luan liket Alan und umgekehrt (=> Match)
+* Luan disliket Bert und umgekehrt (=> Die Usertexte werden jeweills bei dem anderen nicht mehr im Trefferspiel erscheinen)
+
+Um übergroße Datenmengen in der Datenbank zu verhindern und um nach jedem Neustart immer wieder den Initialzustand zu besitzen, wird dieser Initialzustand **nach jedem Neustart der Anwendung wiederhergestellt.** Um dies zu verhindern, muss der Inhalt der Datei data-h2.sql auskommentiert werden.
 
 ### Unter Heroku
 Die Postgres-Datenbank, welche für die Persistierung unter Heroku verantwortlich ist, verfügt über exakt den selben Datenbestand, wie die lokale Version. Die deployte Onlineversion ist unter der folgenden URL erreichbar:
