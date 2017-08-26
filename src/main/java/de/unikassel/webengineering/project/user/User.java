@@ -2,7 +2,6 @@ package de.unikassel.webengineering.project.user;
 
 
 import com.fasterxml.jackson.annotation.*;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -26,7 +25,6 @@ public class User {
 
     private String email;
 
-    //Über JSON nicht lesbar: wir schränken nutzung über access ein
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
@@ -38,16 +36,16 @@ public class User {
 
     //User, die mich "liken"
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="Likes",
-            joinColumns={@JoinColumn(name="LikeTo")},
-            inverseJoinColumns={@JoinColumn(name="LikeFrom")})
+    @JoinTable(name = "Likes",
+            joinColumns = {@JoinColumn(name = "LikeTo")},
+            inverseJoinColumns = {@JoinColumn(name = "LikeFrom")})
     private Set<User> followMe = new HashSet<User>();
 
     //User, die ich selbst "like"
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="Likes",
-            joinColumns={@JoinColumn(name="LikeFrom")},
-            inverseJoinColumns={@JoinColumn(name="LikeTo")})
+    @JoinTable(name = "Likes",
+            joinColumns = {@JoinColumn(name = "LikeFrom")},
+            inverseJoinColumns = {@JoinColumn(name = "LikeTo")})
     private Set<User> followI = new HashSet<User>();
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -58,15 +56,15 @@ public class User {
         return id;
     }
 
-    public List<User> createMatchList(){
+    public List<User> createMatchList() {
         return followI.stream().filter(u -> followMe.contains(u)).collect(Collectors.toList());
     }
 
-    public boolean validateMatch(User userToCheck){
+    public boolean validateMatch(User userToCheck) {
         List<User> matchList = createMatchList();
 
-        for(User u : matchList){
-            if(u.getId().equals(userToCheck.getId())){
+        for (User u : matchList) {
+            if (u.getId().equals(userToCheck.getId())) {
                 return true;
             }
         }
@@ -81,7 +79,7 @@ public class User {
         return email;
     }
 
-    public String getNickname(){
+    public String getNickname() {
         return email.split("@")[0];
     }
 

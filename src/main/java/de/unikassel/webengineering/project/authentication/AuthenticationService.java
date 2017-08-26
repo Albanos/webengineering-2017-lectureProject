@@ -33,7 +33,7 @@ public class AuthenticationService {
     @Value("${authenticationService.jwt.secret}")
     private String JWTSecret;
 
-    public static class UserToken{
+    public static class UserToken {
         //public User user;
         public UserResponse userResponse;
         public String token;
@@ -42,35 +42,33 @@ public class AuthenticationService {
 
     /**
      * Service-methode für den Login des Users
+     *
      * @param email
      * @param password
      * @return Token des Users
      */
-    public UserToken login(String email, String password){
+    public UserToken login(String email, String password) {
         String hashedPassword = hashPassword(password);
-        //User user = userService.getUserByMailAndPassword(email, hashedPassword);
         UserResponse user = userService.getUserByMailAndPassword(email, hashedPassword);
 
 
-        if(user == null){
+        if (user == null) {
             LOG.info("User with data login={}, password={} does not exist", email, password);
             return null;
         }
 
         LOG.info("User with data login={}, password={} login succesful", email, password);
 
-        //Baue das Token für den User
         String token = Jwts.builder()
                 .setSubject(email)
                 //Integriere die ID des Benutzers in das token
                 .setId(user.getId().toString())
-                .signWith(SignatureAlgorithm.HS512,JWTSecret)
+                .signWith(SignatureAlgorithm.HS512, JWTSecret)
                 .compact();
 
 
         //Setze das generierte Token
         UserToken userToken = new UserToken();
-        //userToken.user = user;
         userToken.userResponse = user;
         userToken.token = token;
 
@@ -79,6 +77,7 @@ public class AuthenticationService {
 
     /**
      * Parst das JWT-Token, um es im JWT-Filter validieren zu können
+     *
      * @param jwtToken
      * @return gepastes Token
      */
@@ -92,6 +91,7 @@ public class AuthenticationService {
 
     /**
      * Setzt den aktuell eingeloggten User
+     *
      * @param id
      * @param email
      */
@@ -105,6 +105,7 @@ public class AuthenticationService {
 
     /**
      * Methode für Rückgabe des gehasten Passworts (einschliesslich SALT)
+     *
      * @param password
      * @return gehashtes Passwort
      */
@@ -115,13 +116,14 @@ public class AuthenticationService {
 
     /**
      * Methode für Rückgabe des aktuell eingeloggten Users
+     *
      * @return UserResponse des aktuellen Users
      */
-    public UserResponse getActualLoggedInUser(){
+    public UserResponse getActualLoggedInUser() {
         User user = userService.getCurrentUser();
 
         User userByID = userService.getUserByID(user.getId());
-        if(userByID == null){
+        if (userByID == null) {
             LOG.info("The actual User is anonymus!");
             return null;
         }

@@ -20,10 +20,11 @@ public class JWTConfiguration {
 
     /**
      * JWT-Filter für jedwede Anfrage mit "/api/..."
+     *
      * @return generierter Filter
      */
     @Bean
-    public FilterRegistrationBean jwtFilter(){
+    public FilterRegistrationBean jwtFilter() {
         FilterRegistrationBean bean = new FilterRegistrationBean();
         bean.setFilter(new JWTFilter(authenticationService, userService));
 

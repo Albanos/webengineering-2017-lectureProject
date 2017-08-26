@@ -12,6 +12,8 @@ import java.util.List;
 /**
  * @author Luan Hajzeraj on 09.07.2017.
  */
+
+
 @Service
 public class MessageService {
     private static final Logger LOG = LoggerFactory.getLogger(MessageService.class);
@@ -21,24 +23,25 @@ public class MessageService {
     @Autowired
     private UserService userService;
 
-    public void saveMessage(Message message){
+    public void saveMessage(Message message) {
         messageRepository.save(message);
     }
 
-    public List<Message> getAllMessages(){
+    public List<Message> getAllMessages() {
         return messageRepository.findAll();
     }
 
     /**
      * Methode zur Rückgabe der Nachrichten des aktuell eingeloggten Users
+     *
      * @param user
      * @return Liste von Nachrichten des aktuell eingeloggten Users
      */
-    public List<Message> getMessagesOfActualUser(User user){
+    public List<Message> getMessagesOfActualUser(User user) {
 
         //Wenn der User kein JWT-Token mitsendet, ist es der annonymus-User. Dieser hat keine
         //messages
-        if(userService.isAnonymous()){
+        if (userService.isAnonymous()) {
             LOG.info("The User is anonymus and have not messages");
             return null;
         }
@@ -48,6 +51,7 @@ public class MessageService {
 
     /**
      * Methoder zur Rückgabe von ungelesenen Nachrichten zwischen einem User und seinem Chat-Partner
+     *
      * @param me
      * @param partner
      * @return Liste von ungelesenen Nachrichten
@@ -56,7 +60,7 @@ public class MessageService {
 
         List<Message> unreadMessages = messageRepository.findAllByAuthorAndToUserAndIsRead(partner, me, false);
 
-        for(Message m : unreadMessages){
+        for (Message m : unreadMessages) {
             m.setRead(true);
             messageRepository.save(m);
         }
@@ -66,6 +70,7 @@ public class MessageService {
 
     /**
      * Methoder zur Rückgabe aller ungelesenen Nachrichten (Chat-Partner unabhängig)
+     *
      * @param me
      * @return Liste von ungelesenen Nachrichten
      */

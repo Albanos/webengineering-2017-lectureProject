@@ -1,28 +1,26 @@
 package de.unikassel.webengineering.project.user;
 
 import java.util.HashSet;
-import java.util.stream.Collectors;
 
 
 /**
  * Ist eine Hilfklasse für den Response des Users, bspw. nach dem Login.
  *
  * @author Luan Hajzeraj
- *
  */
 public class UserResponse {
     private Long id;
     private String userName;
     private String userText;
 
-    private HashSet<User> followI= new HashSet<>();
+    private HashSet<User> followI = new HashSet<>();
     private HashSet<User> followMe = new HashSet<>();
     private HashSet<User> matches = new HashSet<>();
     private HashSet<User> dislike = new HashSet<>();
 
-    public UserResponse(User user){
-        id= user.getId();
-        userName= user.getNickname();
+    public UserResponse(User user) {
+        id = user.getId();
+        userName = user.getNickname();
         userText = user.getUsertext();
 
         followI.addAll(user.getFollowI());

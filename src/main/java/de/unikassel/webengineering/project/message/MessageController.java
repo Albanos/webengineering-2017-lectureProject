@@ -32,12 +32,13 @@ public class MessageController {
 
     /**
      * Methode zum versenden einer neuen Nachricht
+     *
      * @param message
      * @return Status 200 oder Status 401
      */
     @RequestMapping(value = "/api/message/newMessage", method = RequestMethod.POST)
-    public ResponseEntity saveMessage(@RequestBody Message message){
-        if(userService.isAnonymous()){
+    public ResponseEntity saveMessage(@RequestBody Message message) {
+        if (userService.isAnonymous()) {
             LOG.info("The actual user is anonymus and cant send messages");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -48,34 +49,37 @@ public class MessageController {
 
     /**
      * Methode zur Rückgabe aller Nachrichten
+     *
      * @return Liste mit allen Nachrichten
      */
     @RequestMapping(value = "api/message/all", method = RequestMethod.GET)
-    public List<Message> getAllMessages(){
+    public List<Message> getAllMessages() {
         return messageService.getAllMessages();
     }
 
 
     /**
      * Methoder zur Rückgabe von allen Nachrichten des aktuell eingeloggten Users
+     *
      * @return Liste von allen Nachrichten des aktuellen Users
      */
     @RequestMapping(value = "/api/message/myMessages", method = RequestMethod.GET)
-    public List<Message> getMessagesOfActualUser(){
+    public List<Message> getMessagesOfActualUser() {
         return messageService.getMessagesOfActualUser(userService.getCurrentUser());
     }
 
 
     /**
      * Methoder zur Rückgabe aller ungelesenen Nachrichten eines bestimmten Chat-Partners
+     *
      * @param id
      * @return Liste von ungelesenen Nachrichten mit einem bestimmten Partner
      */
     @RequestMapping(value = "/api/message/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<Message>> getUnreadMessagesByID(@PathVariable Long id){
+    public ResponseEntity<List<Message>> getUnreadMessagesByID(@PathVariable Long id) {
         User me = userService.getCurrentUser();
 
-        if(me == null){
+        if (me == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
@@ -83,24 +87,25 @@ public class MessageController {
         User partner = userService.getUserByID(id);
 
 
-        if(partner == null || !meExact.validateMatch(partner)){
+        if (partner == null || !meExact.validateMatch(partner)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<Message> unreadMessages = messageService.getUnreadMessages(meExact,partner);
+        List<Message> unreadMessages = messageService.getUnreadMessages(meExact, partner);
 
         return new ResponseEntity<>(unreadMessages, HttpStatus.OK);
     }
 
     /**
      * Methoder zur Rückgbabe von generell ungelesenen Nachrichten (Chat-Partner unabhängig)
+     *
      * @return Liste von ungelesenen Nachrichten
      */
     @RequestMapping(value = "/api/message/", method = RequestMethod.GET)
-    public ResponseEntity<List<Message>> getUnreadMessages(){
+    public ResponseEntity<List<Message>> getUnreadMessages() {
         User me = userService.getCurrentUser();
 
-        if(me == null){
+        if (me == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 

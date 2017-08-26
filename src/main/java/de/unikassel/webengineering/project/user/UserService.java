@@ -29,35 +29,38 @@ public class UserService {
 
     /**
      * Methode zur Rückgabe aller User in der Datenbank
+     *
      * @return Liste aller User
      */
-    public List<User> getUserList(){
+    public List<User> getUserList() {
         //return userRepository.getUserList();
         return userRepository.findAll();
     }
 
     /**
      * Methode zur Rückgabe eines bestimmten Users aus der Datenbank (mittels User-ID)
+     *
      * @param id
      * @return User
      */
-    public User getUserByID(Long id){
+    public User getUserByID(Long id) {
         return userRepository.findOne(id);
     }
 
     /**
      * Methode zur Rückgabe eines bestimmten Users aus der Datenbank (mittels email und PW)
+     *
      * @param email
      * @param password
      * @return User
      */
-    public UserResponse getUserByMailAndPassword(String email, String password){
+    public UserResponse getUserByMailAndPassword(String email, String password) {
         //return userRepository.findByEmailAndPassword(email, password);
 
-        User user = userRepository.findByEmailAndPassword(email,password);
+        User user = userRepository.findByEmailAndPassword(email, password);
         //Wenn User nicht existiert: baue keinen User response, sondern gib Problem nach oben weiter, zum
         //AuthenticationController
-        if(user == null){
+        if (user == null) {
             return null;
         }
 
@@ -67,9 +70,10 @@ public class UserService {
 
     /**
      * Methode zum hinzufügen eines neuen Users zur Datenbank
+     *
      * @param user
      */
-    public void addUser(User user){
+    public void addUser(User user) {
         String hashedPassword = hashPassword(user.getPassword());
         user.setPassword(hashedPassword);
 
@@ -78,14 +82,15 @@ public class UserService {
 
     /**
      * Methode zum Löschen eines bestimmten Users aus der Datenbank
+     *
      * @param id
      */
-    public void deleteUSerByID(Long id){
+    public void deleteUSerByID(Long id) {
         userRepository.delete(id);
     }
 
     //Gibt den Aktuell angemeldeten User zurück
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
@@ -124,9 +129,10 @@ public class UserService {
 
     /**
      * Methode zur Rückgabe eines noch ungelesenen/nicht kategorisierten User-textes
+     *
      * @return User
      */
-    public User getNextUnreadUser(){
+    public User getNextUnreadUser() {
 
         User me = getCurrentUser();
         User meExact = userRepository.findOne(me.getId());
@@ -134,7 +140,7 @@ public class UserService {
 
         //Nur ein angemeldeter User kann liken oder disliken
         //Wird der User nicht gefunden (evtl nicht angemeldet): gebe null zurück
-        if(meExact == null){
+        if (meExact == null) {
             return null;
         }
         List<Long> followI = meExact.getFollowI().stream().map(User::getId).collect(Collectors.toList());
@@ -144,7 +150,7 @@ public class UserService {
         List<User> usersIdNotIn = userRepository.findAllByIdNotIn(followI, dislikeI);
 
 
-        if(usersIdNotIn.size() > 0){
+        if (usersIdNotIn.size() > 0) {
             Random randomizer = new Random();
 
             return usersIdNotIn.get(randomizer.nextInt(usersIdNotIn.size()));
@@ -156,9 +162,10 @@ public class UserService {
 
     /**
      * Methode zum "liken" eines Usertextes: eintragen in die like-liste des aktuell eingeloggten Users
+     *
      * @param id
      */
-    public void likeTextOfUserWithID(Long id){
+    public void likeTextOfUserWithID(Long id) {
         User me = getCurrentUser();
         User meExact = userRepository.findOne(me.getId());
 
@@ -172,9 +179,10 @@ public class UserService {
 
     /**
      * Methode zum "disliken" eines Usertextes: eintragen in die dislike-liste des aktuell eingeloggten Users
+     *
      * @param id
      */
-    public void dislikeTextOfUserWithID(Long id){
+    public void dislikeTextOfUserWithID(Long id) {
         User me = getCurrentUser();
         User meExact = userRepository.findOne(me.getId());
 
@@ -187,14 +195,13 @@ public class UserService {
 
     /**
      * Methode zur Rückgabe des gehasten Passworts eines Users
+     *
      * @param password
      * @return Passwort als hash-wert
      */
     public String hashPassword(String password) {
         return DigestUtils.sha512Hex(salt + password);
     }
-
-
 
 
 }

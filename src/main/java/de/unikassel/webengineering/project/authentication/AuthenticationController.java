@@ -1,11 +1,8 @@
 package de.unikassel.webengineering.project.authentication;
 
-import de.unikassel.webengineering.project.authentication.AuthenticationService;
 import de.unikassel.webengineering.project.user.User;
 import de.unikassel.webengineering.project.user.UserResponse;
 import de.unikassel.webengineering.project.user.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,14 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthenticationController {
-    private static final Logger LOG = LoggerFactory.getLogger(AuthenticationController.class);
 
-    public static class UserLogin{
+    public static class UserLogin {
         public String email;
         public String password;
     }
 
-    public static class UserToken{
+    public static class UserToken {
         public User user;
         public String token;
     }
@@ -42,39 +38,39 @@ public class AuthenticationController {
 
     /**
      * REST-Schnittstelle für Userlogin
+     *
      * @param userLogin
      * @return Status 200 mit User-token im header oder Status 401
      */
     @RequestMapping(value = "/api/user/login", method = RequestMethod.POST)
-    public ResponseEntity<UserResponse> login(@RequestBody UserLogin userLogin){
+    public ResponseEntity<UserResponse> login(@RequestBody UserLogin userLogin) {
 
-        //Suche den entsprechenden User in der Datenbank, der sich einloggen möchte
         AuthenticationService.UserToken tokenResponse = service.login(userLogin.email, userLogin.password);
 
         //Wenn User in der Datenbank nicht existiert: gebe 401 (UNAUTHORISIERT) zurück
-        if(tokenResponse == null){
+        if (tokenResponse == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
         //Existiert der User: gebe sein token und ein 200 (OK) zurück
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization","Bearer "+tokenResponse.token);
+        headers.set("Authorization", "Bearer " + tokenResponse.token);
 
 
-        return new ResponseEntity<UserResponse>(tokenResponse.userResponse ,headers, HttpStatus.OK);
+        return new ResponseEntity<UserResponse>(tokenResponse.userResponse, headers, HttpStatus.OK);
     }
 
     /**
      * Gibt den aktuell eingeloggten User zurück
+     *
      * @return Status 200 mit UserResponse oder Status 404
      */
-    @RequestMapping(value="/api/user/actualUser", method = RequestMethod.GET)
-    public ResponseEntity<UserResponse> getActualLoggedInUser(){
+    @RequestMapping(value = "/api/user/actualUser", method = RequestMethod.GET)
+    public ResponseEntity<UserResponse> getActualLoggedInUser() {
         UserResponse userResponse = service.getActualLoggedInUser();
-        if(userResponse == null){
+        if (userResponse == null) {
             return new ResponseEntity<UserResponse>(userResponse, HttpStatus.NOT_FOUND);
-        }
-        else{
+        } else {
             return new ResponseEntity<UserResponse>(userResponse, HttpStatus.OK);
         }
 

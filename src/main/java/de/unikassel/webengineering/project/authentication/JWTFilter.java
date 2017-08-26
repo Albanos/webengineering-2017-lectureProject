@@ -1,12 +1,10 @@
 package de.unikassel.webengineering.project.authentication;
 
-import de.unikassel.webengineering.project.authentication.AuthenticationService;
 import de.unikassel.webengineering.project.user.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -36,6 +34,7 @@ public class JWTFilter extends GenericFilterBean {
 
     /**
      * Anwendung des zuvor definierten Filters für HTTP-Anfragen
+     *
      * @param request
      * @param response
      * @param filterChain
@@ -49,18 +48,16 @@ public class JWTFilter extends GenericFilterBean {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-        //Liefert mir den Teil des Headers, der unter Authorization steht
         String auth = httpServletRequest.getHeader("Authorization");
 
         //Entspricht das Token nicht dem zurück-gelieferten: Gebe ein 401 zurück
-        if(!StringUtils.startsWithIgnoreCase(auth,"Bearer ")){
+        if (!StringUtils.startsWithIgnoreCase(auth, "Bearer ")) {
 
             // Allow requests without a token.
             LOG.debug("No token provided, setting to anonymous user");
             userService.setAnonymous();
             filterChain.doFilter(request, response);
 
-            //httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
             return;
         }
 
@@ -73,7 +70,7 @@ public class JWTFilter extends GenericFilterBean {
             userService.setCurrentUser(Long.parseLong(body.getId()), body.getSubject());
             filterChain.doFilter(request, response);
 
-            if(body.getId() == null){
+            if (body.getId() == null) {
                 LOG.info("ID from User={} is null. Do you forget to send the JWT-Token!?", body.getSubject());
             }
 

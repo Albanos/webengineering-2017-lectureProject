@@ -16,6 +16,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * Spring-Sicherheitskonfiguration (erlaubt grundsätzlich alles; verwendung nur für Kontext)
+     *
      * @param http
      * @throws Exception
      */

@@ -13,8 +13,7 @@ import java.util.Date;
  * @author Luan Hajzeraj on 08.07.2017.
  */
 
-//Message allein konnte nicht gemappt werden...
-@Entity(name="Message_")
+@Entity(name = "Message_")
 public class Message {
 
     @Id
@@ -22,11 +21,11 @@ public class Message {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name="AUTHOR_ID")
+    @JoinColumn(name = "AUTHOR_ID")
     private User author;
 
     @OneToOne
-    @JoinColumn(name="TO_USER_ID")
+    @JoinColumn(name = "TO_USER_ID")
     private User toUser;
 
     private Date timestamp;
@@ -34,7 +33,7 @@ public class Message {
 
     private boolean isRead = false;
 
-    public Message(){
+    public Message() {
 
     }
 
@@ -88,7 +87,7 @@ public class Message {
     }
 
     @PrePersist
-    public void prePersistent(){
+    public void prePersistent() {
         timestamp = new Date();
     }
 }
