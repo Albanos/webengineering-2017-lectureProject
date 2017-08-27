@@ -4,7 +4,7 @@
   "login": "Anmelden",
   "logout": "Abmelden",
   "loginNotSuccesful": "Anmeldung war nicht erfolgreich",
-  "loginSuccesful": "Anmeldung was erfolgreich",
+  "loginSuccesful": "Anmeldung war erfolgreich",
   "followI": "Folge ich",
   "followMe": "Folgen mir",
   "match": "Treffer",
@@ -16,7 +16,7 @@
   "signUpIntro": "Bitte geben Sie Ihre E-Mail-Adresse, ein Passwort und Ihren spezifischen Text ein.",
   "usertext": "Benutzer-Text",
   "error": "Fehler",
-  "aLittleProblem": "Oops, da ist ein kleiner Problem aufgetreten... Hast du vielleicht schon alle gelikt oder dislikt?",
+  "aLittleProblem": "Oops, da ist ein kleines Problem aufgetreten... Hast du vielleicht schon alle gelikt oder dislikt?",
   "SignUpAndLogin": "Konto erstellen und anmelden",
   "newMessageFrom": "Neue Nachricht von"
 }
