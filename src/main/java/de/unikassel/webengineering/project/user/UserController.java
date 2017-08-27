@@ -39,8 +39,8 @@ public class UserController {
         //Wurde so gelöst, weil das setzen auf undefined in signUp.js Warnings verursacht.
         //Dies würde null übergeben, verursacht aber warnings. Um diese auszuschliessen, werden
         //die übergebenen Werte in singUp.js NICHT auf "undefined" sondern auf "" gesetzt.
-        if (newUser.getEmail() == "" || newUser.getPassword() == "" ||
-                newUser.getUsertext() == "") {
+        if (newUser.getEmail().isEmpty() || newUser.getPassword().isEmpty() ||
+                newUser.getUsertext().isEmpty() || newUser.getUsertext().length() > 255) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

@@ -82,7 +82,7 @@ class SignUp extends React.Component {
                         <div>
                             <label for="pwd">{t('usertext')}</label>
                             <input type="text" class="form-control" value={this.state.usertext}
-                                   onChange={this.handleUserTextChange}/>
+                                   onChange={this.handleUserTextChange} maxLength="255"/>
                             <br/>
                             <button type="submit" class="btn btn-default">{t('SignUpAndLogin')}</button>
 

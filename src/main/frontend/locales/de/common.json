@@ -13,7 +13,7 @@
   "dislike": "Gefällt mir nicht",
   "actualUser": "Aktueller Benutzer",
   "signUp": "Konto anlegen",
-  "signUpIntro": "Bitte geben Sie Ihre E-Mail-Adresse, ein Passwort und Ihren spezifischen Text ein.",
+  "signUpIntro": "Bitte geben Sie Ihre E-Mail-Adresse, ein Passwort und Ihren spezifischen Text ein. Beachten Sie, dass der Usertext nur 255 Zeichen lang sein darf.",
   "usertext": "Benutzer-Text",
   "error": "Fehler",
   "aLittleProblem": "Oops, da ist ein kleines Problem aufgetreten... Hast du vielleicht schon alle gelikt oder dislikt?",
